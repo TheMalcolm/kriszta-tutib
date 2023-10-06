@@ -7,13 +7,28 @@ import Dashboard from '@/components/Admin/Dashboard'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'HomePage',
+      component: HomePage
+    },
+    {
+      path: '/idopontfoglalas/kozmetika',
+      name: 'CosmeticsAppointment',
       component: CosmeticsAppointment
     },
-    
+    {
+      path: '/idopontfoglalas/panzio',
+      name: 'HostelAppointment',
+      component: null
+    },
+    {
+      path: '/kalkulator',
+      name: 'Calculator',
+      component: null
+    },
   ]
 })
 

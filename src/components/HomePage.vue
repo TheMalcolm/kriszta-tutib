@@ -16,10 +16,18 @@
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto " style="color: #5c002e;" >
               <!-- Using 'button-content' slot -->
-              <b-nav-item href="#">Főoldal</b-nav-item>
-              <b-nav-item href="#">Kozmetika</b-nav-item>
-              <b-nav-item href="#">Panzió</b-nav-item>
-              <b-nav-item href="#">Kalkulátor</b-nav-item>
+              <b-nav-item href="#">
+                <router-link :to="{ name: 'HomePage' }">Főoldal</router-link>
+              </b-nav-item>
+              <b-nav-item href="#">
+                <router-link :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link>
+              </b-nav-item>
+              <b-nav-item href="#">
+                <router-link :to="{ name: 'HostelAppointment' }">Panzió</router-link>
+              </b-nav-item>
+              <b-nav-item href="#">
+                <router-link :to="{ name: 'Calculator' }">Kalkulátor</router-link>
+              </b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>

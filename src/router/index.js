@@ -4,6 +4,7 @@ import HomePage from '@/components/HomePage'
 import CosmeticsAppointment from '@/components/CosmeticsAppointment'
 import Dashboard from '@/components/Admin/Dashboard'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +29,11 @@ export default new Router({
       path: '/kalkulator',
       name: 'Calculator',
       component: null
+    },
+    {
+      path: '/admin',
+      name: 'Dashboard',
+      component: Dashboard,
     },
   ]
 })

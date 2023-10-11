@@ -2,9 +2,9 @@
   <div>
   <header style="background-color: #F0A8CC20">
     <div class="container">
-      <b-navbar toggleable="lg" variant="info">
+      <b-navbar toggleable="lg" variant="info" style="padding: 0px;">
         <b-navbar-brand href="/">
-          <img :src="logo" style=" width: 150px;" alt="Logo">
+          <img :src="logo" style=" width: 120px;" alt="Logo">
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -14,51 +14,48 @@
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto " style="color: #5c002e;" >
+          <b-navbar-nav pills class="ml-auto " style="color: #5c002e;" >
               <!-- Using 'button-content' slot -->
-              <b-nav-item href="#">
-                <router-link :to="{ name: 'HomePage' }">Főoldal</router-link>
+              <b-nav-item href="#" >
+                <router-link class="nav-btn" :to="{ name: 'HomePage' }">Főoldal</router-link>
               </b-nav-item>
               <b-nav-item href="#">
-                <router-link :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link>
+                <router-link class="nav-btn" :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link>
               </b-nav-item>
               <b-nav-item href="#">
-                <router-link :to="{ name: 'HostelAppointment' }">Panzió</router-link>
+                <router-link class="nav-btn" :to="{ name: 'HostelAppointment' }">Panzió</router-link>
               </b-nav-item>
               <b-nav-item href="#">
-                <router-link :to="{ name: 'Calculator' }">Kalkulátor</router-link>
+                <router-link class="nav-btn" :to="{ name: 'Calculator' }">Kalkulátor</router-link>
               </b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
 
-      <div class="row">
-        <div class="col-10 offset-1 ">
-          <div class="d-flex gap-5 align-items-center " style="color: #5c002e;"  >
-            <img :src="heroImage" alt="Tuti bunda kozmetika" style="transform: translateY(50px);"/>
-            <div style="text-align: left;">
-              <h1 class="mb-5" >Üdvözöllek a Tuti-Bunda Kutyakozmetika és Panzió oldalán!</h1>
-              <p class="mb-3">Kedves látogató, örülök, hogy az oldalra tévedtél. Kérlek böngéssz bátran, ismerd meg a munkásságom és foglalj időpontot kedvedre!</p>
+      <b-container>
+        <b-row>
+          <b-col class="herocol">
+            <img :src="heroImage" alt="Tuti bunda kozmetika" class="hero" />
+          </b-col>
+          <b-col class="bigtext" >
+            <h1 class="mb-5 welcome" >Üdvözöllek a Tuti-Bunda Kutyakozmetika és Panzió oldalán!</h1>
+            <p class="mb-3">Kedves látogató, örülök, hogy az oldalra tévedtél. Kérlek böngéssz bátran, ismerd meg a munkásságom és foglalj időpontot kedvedre!</p>
             <button class="btn btn-primary align-self-center cta-button">Rólam</button>
-             
-            </div>
-          </div>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-container>
       
     </div>
   </header>
   <div class="container" style="padding-top: 70px; color: #5c002e;">
   <h1>Szolgáltatásaim</h1>
-  <div class="row">
-    <div class="col-10">
-      <div class="container d-flex align-items-center justify-content-between" style="padding-top: 30px; padding-left: 20%; padding-bottom: 50px; ">
-        <img :src="groom" alt="Kozmetika" style="cursor: pointer;"/>
-        <img :src="hotel" alt="Kozmetika" style="cursor: pointer;" />
+  <b-container class="bv-example-row">
 
-      </div>
-    </div>
-  </div>
+  <b-row style="justify-content: center;">
+    <b-col cols="12"  sm="6" class="bigico" ><img :src="groom" alt="Kozmetika" style="cursor: pointer;"/></b-col>
+    <b-col cols="12" sm="6" class="bigico" ><img :src="hotel" alt="Panzio" style="cursor: pointer;" /></b-col>
+  </b-row>
+</b-container>
 </div>
 <div>
   <div style="padding-bottom: 40px;">
@@ -71,21 +68,50 @@
 <p c>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at suscipit lorem.  Nulla eu diam nec arcu tempor molestie. Mauris accumsan ullamcorper eros quis pretium.  Nunc ornare efficitur massa, a fermentum justo. Integer consequat ante ut nisi dictum commodo. Nunc bibendum orci felis, et elementum tortor fringilla at. Morbi in erat imperdiet, volutpat mi porttitor, malesuada nisl. Morbi gravida tempor faucibus. Nulla posuere justo et libero ullamcorper, id mattis sem mollis. Vestibulum pulvinar vulputate velit, vel mattis erat interdum vitae. Nulla molestie, libero et porta vulputate, ligula purus pellentesque dui,  eu maximus ex libero vel magna. Fusce bibendum erat turpis.</p>
 </div>
 </div>
+<footer style="padding-top: 30px;">
+  <div style="background-color: #5c002e; color: white;">
+    <b-container class="bv-example-row">
+      <b-row class="text-center">
+        <b-col style="margin-top: 10px; margin-bottom: 8px; text-align: left; ">
+          <b-row ><router-link class="links" :to="{ name: 'HomePage' }">Főoldal</router-link> </b-row>
+          <b-row ><router-link class="links" :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link> </b-row>
+          <b-row ><router-link class="links" :to="{ name: 'HostelAppointment' }">Panzió</router-link> </b-row>
+          <b-row ><router-link class="links" :to="{ name: 'Calculator' }">Kalkulátor</router-link> </b-row>
+         </b-col>
+    <b-col cols="6">
+
+      <a href="https://www.facebook.com/tutibundakutyakozmetika"><img src="../assets/facebook.png"></a>
+      <a href="https://www.instagram.com/tuti_bunda_kutyakozmetika/?hl=hu"><img src="../assets/instagram.png"></a>
+    </b-col>
+    
+    <b-col  class="contact" style="text-align: right;" >
+     <b-row>9028, Győr, Lepke u. 30 </b-row> 
+     <b-row>+36 70 665 1405</b-row>
+     <b-row>szroxi200@icloud.com</b-row>
+    </b-col>
+  
+  </b-row></b-container>
+    
+  </div>
+</footer>
 
 </div>
 </template>
 
 <script>
+import router from '../router';
+
 export default {
-  name: 'HomePage',
-  data () {
-    return {
-      logo: require('../assets/tuti-bunda-logo.png'),
-      heroImage: require('../assets/hero-image.png'),
-      groom: require('../assets/groomico.png'),
-      hotel: require('../assets/hotelico.png')
-    }
-  }
+    name: 'HomePage',
+    data() {
+        return {
+            logo: require('../assets/tuti-bunda-logo.png'),
+            heroImage: require('../assets/hero-image.png'),
+            groom: require('../assets/groomico.png'),
+            hotel: require('../assets/hotelico.png')
+        };
+    },
+    components: { router }
 }
 </script>
 
@@ -111,4 +137,75 @@ export default {
 .services {
   padding-top: 10px;
 }
+
+.nav-btn {
+  text-decoration: none;
+  color: #5c002e;
+  transition: color 0.5s, font-size 0.5s;
+  font-size: medium;
+}
+
+.contact {
+  
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.nav-btn:hover {
+  
+  font-size: large;
+  }
+
+.bigtext {
+  text-align: left;
+  transform: translateY(50px);
+}
+
+.bigico{
+  margin-bottom: 20px;
+}
+
+.hero{
+  transform: translateY(50px);
+}
+
+.links{
+  color: #ffffff;
+  margin-bottom: 0px;
+  text-align: left ;
+  text-decoration: none;
+}
+
+  @media screen and (max-width: 769px) {
+    .bigico {
+      transform: scale(0.78) translateX(-25px);
+      margin-bottom: 0px;
+    }
+
+    .hero{
+      height: 80%;
+      transform: none;
+      
+    }
+    .contact{
+      margin-left: 10px;
+    }
+
+    .welcome{
+      margin-top: 20px;
+      margin-bottom: 20px !important;
+    }
+
+    .herocol{
+      height: 85%;
+    }
+    .bigtext{
+      text-align: center;
+      transform: none;
+    }
+
+    .cta-button{
+      margin-bottom: 10px;
+    }
+  }
 </style>

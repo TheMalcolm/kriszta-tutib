@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
 import CosmeticsAppointment from '@/components/CosmeticsAppointment'
+import DogBoardingHouseAppointment from '@/components/DogBoardingHouseAppointment'
 import Dashboard from '@/components/Admin/Dashboard'
 
 
@@ -22,14 +23,10 @@ export default new Router({
     },
     {
       path: '/idopontfoglalas/panzio',
-      name: 'HostelAppointment',
-      component: null
+      name: 'DogBoardingHouseAppointment',
+      component: DogBoardingHouseAppointment
     },
-    {
-      path: '/kalkulator',
-      name: 'Calculator',
-      component: null
-    },
+    
     {
       path: '/admin',
       name: 'Dashboard',

@@ -23,10 +23,7 @@
                 <router-link class="nav-btn" :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link>
               </b-nav-item>
               <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'HostelAppointment' }">Panzió</router-link>
-              </b-nav-item>
-              <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'Calculator' }">Kalkulátor</router-link>
+                <router-link class="nav-btn" :to="{ name: 'DogBoardingHouseAppointment' }">Panzió</router-link>
               </b-nav-item>
           </b-navbar-nav>
         </b-collapse>

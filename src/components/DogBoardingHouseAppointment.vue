@@ -234,6 +234,11 @@ export default {
     },
 
     addNewPet() {
+      if(this.form.petCount >= 6) {
+        alert('Maximum 6 kiskedvenc adható hozzá!');
+        return
+      }
+
       this.form.petDetails.push({
         name: null,
         type: null,

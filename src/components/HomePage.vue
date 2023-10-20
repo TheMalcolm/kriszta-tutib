@@ -82,9 +82,9 @@
     </b-col>
     
     <b-col  class="contact" style="text-align: right;" >
-     <b-row>9028, Győr, Lepke u. 30 </b-row> 
-     <b-row>+36 70 665 1405</b-row>
-     <b-row>szroxi200@icloud.com</b-row>
+     <b-row class="justify-content-end">9028, Győr, Lepke u. 30 </b-row> 
+     <b-row class="justify-content-end">+36 70 665 1405</b-row>
+     <b-row class="justify-content-end">szroxi200@icloud.com</b-row>
     </b-col>
   
   </b-row></b-container>

@@ -65,38 +65,13 @@
 <p c>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at suscipit lorem.  Nulla eu diam nec arcu tempor molestie. Mauris accumsan ullamcorper eros quis pretium.  Nunc ornare efficitur massa, a fermentum justo. Integer consequat ante ut nisi dictum commodo. Nunc bibendum orci felis, et elementum tortor fringilla at. Morbi in erat imperdiet, volutpat mi porttitor, malesuada nisl. Morbi gravida tempor faucibus. Nulla posuere justo et libero ullamcorper, id mattis sem mollis. Vestibulum pulvinar vulputate velit, vel mattis erat interdum vitae. Nulla molestie, libero et porta vulputate, ligula purus pellentesque dui,  eu maximus ex libero vel magna. Fusce bibendum erat turpis.</p>
 </div>
 </div>
-<footer style="padding-top: 30px;">
-  <div style="background-color: #5c002e; color: white;">
-    <b-container class="bv-example-row">
-      <b-row class="text-center">
-        <b-col style="margin-top: 10px; margin-bottom: 8px; text-align: left; ">
-          <b-row ><router-link class="links" :to="{ name: 'HomePage' }">Főoldal</router-link> </b-row>
-          <b-row ><router-link class="links" :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link> </b-row>
-          <b-row ><router-link class="links" :to="{ name: 'HostelAppointment' }">Panzió</router-link> </b-row>
-          <b-row ><router-link class="links" :to="{ name: 'Calculator' }">Kalkulátor</router-link> </b-row>
-         </b-col>
-    <b-col cols="6">
-
-      <a href="https://www.facebook.com/tutibundakutyakozmetika"><img src="../assets/facebook.png"></a>
-      <a href="https://www.instagram.com/tuti_bunda_kutyakozmetika/?hl=hu"><img src="../assets/instagram.png"></a>
-    </b-col>
-    
-    <b-col  class="contact" style="text-align: right;" >
-     <b-row class="justify-content-end">9028, Győr, Lepke u. 30 </b-row> 
-     <b-row class="justify-content-end">+36 70 665 1405</b-row>
-     <b-row class="justify-content-end">szroxi200@icloud.com</b-row>
-    </b-col>
-  
-  </b-row></b-container>
-    
-  </div>
-</footer>
-
+<Footer/>
 </div>
 </template>
 
 <script>
 import router from '../router';
+import Footer from '../components/Shared/Footer.vue'
 
 export default {
     name: 'HomePage',
@@ -108,7 +83,7 @@ export default {
             hotel: require('../assets/hotelico.png')
         };
     },
-    components: { router }
+    components: { router, Footer }
 }
 </script>
 

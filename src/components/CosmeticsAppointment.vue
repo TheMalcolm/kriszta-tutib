@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    
       <header style="background-color: #F0A8CC20; ">
         <div class="container">
           <b-navbar toggleable="lg" variant="info" style="padding: 0px;">
@@ -14,9 +14,9 @@
               <b-navbar-nav>
               </b-navbar-nav>
 
-              <!-- Right aligned nav items -->
+     
               <b-navbar-nav class="ml-auto " style="color: #5c002e;">
-                <!-- Using 'button-content' slot -->
+               
                 <b-nav-item href="#">
                   <router-link class="nav-btn" :to="{ name: 'HomePage' }">Főoldal</router-link>
                 </b-nav-item>
@@ -31,7 +31,7 @@
           </b-navbar>
         </div>
       </header>
-    </div>
+    
 
     <b-container class="cont" style="display:flex flex-wrap: wrap;">
       <h1 style="padding-top: 30px; color: #5c002e;" class="my-5">Foglalj időpontot kozmetikánkba!</h1>
@@ -112,9 +112,7 @@
                 </b-form-group>
               </div>
 
-              <div class="servtime" v-if="treatmentDuration !== null">
-                Ez a kezelés {{ treatmentDuration }} percet fog tartani.
-              </div>
+            
             </b-form>
 
             <b-card title="Kérlek válassz időpontot" class="mt-4">
@@ -199,22 +197,27 @@
         </b-col>
       </b-row>
     </b-container>
+   <Footer/>
   </div>
+  
 </template>
 
 <script>
 import { NavbarPlugin } from 'bootstrap-vue';
 import HomePage from './HomePage.vue';
-import logo from '../assets/tuti-bunda-logo.png'
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
-import _ from 'lodash'
+
+import _ from 'lodash';
+import Footer from '../components/Shared/Footer.vue';
+
 
 export default {
   name: 'CosmeticsAppointment',
 
   components: {
-    'date-picker': DatePicker
+    'date-picker': DatePicker,
+    Footer,
   },
 
   data() {
@@ -341,7 +344,7 @@ export default {
       sideimage: require('../assets/tutib-cosmetics-appointment-side-image.png'),
     };
   },
-  components: { HomePage, NavbarPlugin },
+  components: { HomePage, NavbarPlugin, Footer },
 
   watch: {
     'form.length': {

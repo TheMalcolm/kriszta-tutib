@@ -173,6 +173,7 @@
         </div>
       </b-row>
     </b-container>
+    <Footer/>
   </div>
 </template>
 
@@ -180,12 +181,14 @@
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import _ from 'lodash'
+import Footer from './Shared/Footer.vue';
 
 export default {
   name: 'DogBoardingHouseAppointment',
 
   components: {
-    'date-picker': DatePicker
+    'date-picker': DatePicker,
+    Footer,
   },
 
   data() {

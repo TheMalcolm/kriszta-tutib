@@ -3,9 +3,9 @@
     <b-container class="bv-example-row">
       <b-row >
         <b-col class="links foot" sm="12" md="4" style="margin-top: 10px;" >
-            <div><router-link to="{ name: 'HomePage' }" class="text-decoration-none text-reset">Főoldal</router-link></div>
-          <div><router-link to="{ name: 'CosmeticsAppointment' }" class="text-decoration-none text-reset">Kozmetika</router-link></div>
-          <div><router-link to="{ name: 'HostelAppointment' }" class="text-decoration-none text-reset ">Panzió</router-link></div>
+            <div><router-link :to="{ name: 'HomePage' }" class="text-decoration-none text-reset">Főoldal</router-link></div>
+          <div><router-link :to="{ name: 'CosmeticsAppointment' }"  class="text-decoration-none text-reset">Kozmetika</router-link></div>
+          <div><router-link :to="{ name: 'DogBoardingHouseAppointment' }" class="text-decoration-none text-reset ">Panzió</router-link></div>
           
          </b-col>
     <b-col   class="foot-link" sm="12" md="4">
@@ -29,7 +29,7 @@ import router from '../../router'
 
 
 export default {
-    name: 'Footertb',
+    name: 'Footer',
     components: { router }
 }
 

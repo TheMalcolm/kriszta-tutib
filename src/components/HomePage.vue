@@ -44,7 +44,7 @@
       
     </div>
   </header>
-  <div class="container" style="padding-top: 70px; color: #5c002e;">
+  <div class="container" style="padding-top: 70px; color: #5c002e; font-family: 'Crimson Pro', serif;">
   <h1>Szolgáltatásaim</h1>
   <b-container class="bv-example-row">
 
@@ -56,14 +56,30 @@
 </div>
 <div>
   <div style="padding-bottom: 40px;">
-    <div class="container"  style="background-color: #5c002e; border-radius: 15px;">
-<h3 style="color:white; padding: 5px;">Rólam</h3>
-</div>
+    <div class="container"  style="background-color: #5c002e; border-radius: 15px; margin-top: 30px;">
+      <h3 style="color:white; padding: 5px; font-family: 'Crimson Pro', serif;">Rólam</h3>
+    </div>
   </div>
 
-<div class="container" style="text-align: left; color: #5c002e;">
+<div class="container" style="text-align: left; color: #5c002e; margin-bottom: 30px;">
 <p c>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at suscipit lorem.  Nulla eu diam nec arcu tempor molestie. Mauris accumsan ullamcorper eros quis pretium.  Nunc ornare efficitur massa, a fermentum justo. Integer consequat ante ut nisi dictum commodo. Nunc bibendum orci felis, et elementum tortor fringilla at. Morbi in erat imperdiet, volutpat mi porttitor, malesuada nisl. Morbi gravida tempor faucibus. Nulla posuere justo et libero ullamcorper, id mattis sem mollis. Vestibulum pulvinar vulputate velit, vel mattis erat interdum vitae. Nulla molestie, libero et porta vulputate, ligula purus pellentesque dui,  eu maximus ex libero vel magna. Fusce bibendum erat turpis.</p>
 </div>
+<b-container lg="10">
+  <b-row cols="4" cols-md="4" cols-lg="4">
+  <b-col  > <img src='../assets/home_1.jpg' class="gallery"/> </b-col>
+  <b-col > <img src='../assets/home_2.jpg' class="gallery"/> </b-col>
+  <b-col > <img src='../assets/home_3.jpg' class="gallery"/> </b-col>
+  <b-col  > <img src='../assets/home_4.jpg' class="gallery"/> </b-col>
+  <b-col > <img src='../assets/home_5.jpg' class="gallery"/> </b-col>
+  <b-col  > <img src='../assets/home_6.jpg' class="gallery"/> </b-col>
+  <b-col  > <img src='../assets/home_7.jpg' class="gallery"/> </b-col>
+  <b-col  > <img src='../assets/home_8.jpg' class="gallery"/> </b-col>
+</b-row>
+<b-row>
+  
+</b-row>
+</b-container>
+
 </div>
 <Footer/>
 </div>
@@ -80,7 +96,8 @@ export default {
             logo: require('../assets/tuti-bunda-logo.png'),
             heroImage: require('../assets/hero-image.png'),
             groom: require('../assets/groomico.png'),
-            hotel: require('../assets/hotelico.png')
+            hotel: require('../assets/hotelico.png'),
+            
         };
     },
     components: { router, Footer }
@@ -91,6 +108,17 @@ export default {
 <style scoped>
 .bg-info {
   background-color: transparent !important;
+}
+
+.gallery{
+  width: 222px;
+  height: 222px;
+  border-radius: 15px;
+  margin-bottom: 81px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.welcome{
+  font-family: 'Crimson Pro', serif;
 }
 .cta-button {
   background-color:#5c002e;
@@ -115,6 +143,7 @@ export default {
   color: #5c002e;
   transition: color 0.5s, font-size 0.5s;
   font-size: medium;
+  font-family: 'Crimson Pro', serif;
 }
 
 .contact {
@@ -148,11 +177,22 @@ export default {
   text-decoration: none;
 }
 
+@media screen and (max-width: 992px) {
+  .gallery{
+    width: 150px;
+    height: 150px;
+  }
+}
+
   @media screen and (max-width: 769px) {
     .bigico {
       transform: scale(0.78) translateX(-25px);
       margin-bottom: 0px;
     }
+    .gallery{
+    width: 110px;
+    height: 110px;
+  }
 
     .hero{
       height: 80%;

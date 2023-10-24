@@ -1,38 +1,11 @@
 <template>
   <div>
     <header style="background-color: #F0A8CC20; ">
-      <div class="container">
-        <b-navbar toggleable="lg" variant="info" style="padding: 0px;">
-          <b-navbar-brand href="/">
-            <img src='../assets/tuti-bunda-logo.png' style=" width: 120px; " alt="Logo">
-          </b-navbar-brand>
-
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-          <b-collapse id="nav-collapse" class="justify-content-end" is-nav>
-            <b-navbar-nav>
-            </b-navbar-nav>
-
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto " style="color: #5c002e;">
-              <!-- Using 'button-content' slot -->
-              <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'HomePage' }">Főoldal</router-link>
-              </b-nav-item>
-              <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link>
-              </b-nav-item>
-              <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'DogBoardingHouseAppointment' }">Panzió</router-link>
-              </b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
-      </div>
+      <Bar/>
     </header>
 
     <b-container class="cont" style="display:flex flex-wrap: wrap;">
-      <h1 style="padding-top: 30px; color: #5c002e;" class="my-5">Foglalj időpontot panziónkba!</h1>
+      <h1 style="padding-top: 30px; color: #5c002e; font-family: 'Crimson Pro', serif;" class="my-5">Foglalj időpontot panziónkba!</h1>
       <input type="hidden" v-model="form.petCount" />
       <b-row class="all">
         <div class="col-9">
@@ -69,7 +42,7 @@
                 </div>
               </div>
 
-              <b-button variant="primary" class="addNewPetButton" @click="addNewPet"><b-icon-plus /> Kutya hozzáadása</b-button>
+              <b-button  class="addNewPetButton" @click="addNewPet"><b-icon-plus /> Kutya hozzáadása</b-button>
             </b-card-body>
           </b-card>
 
@@ -115,7 +88,7 @@
                       </div>
                     </b-form-checkbox>
 
-                    <b-button size="sm" variant="outline-danger" @click="removePet(index)"><b-icon-trash /> Törlés</b-button>
+                    <b-button size="sm"  @click="removePet(index)"><b-icon-trash /> Törlés</b-button>
                   </div>
                 </b-card-body>
               </b-card>
@@ -123,8 +96,8 @@
           </div>
         </div>
         <div class="col-3">
-          <b-card title="Összegzés">
-            <b-card-body style="text-align: left;">
+          <b-card style="color: #5c002e;" title="Összegzés">
+            <b-card-body style="text-align: left; color:#5c002e">
               <div v-if="form.interval != null && form.petCount > 0">
                 <div class="sum-row">
                   <span>Alapdíj <span class="price">{{ form.petCount * prices.basePrice * summary.days }} Ft</span></span>
@@ -162,7 +135,7 @@
                   Elfogadom az általános szerződési feltételekben és az adatvédelmi nyilatkozatban foglaltakat.
                 </b-form-checkbox>
 
-                <button class="btn btn-primary mt-4">Időpont lefoglalása</button>
+                <button class="btn btn-save mt-4">Időpont lefoglalása</button>
               </div>
               <div v-else class="text-center py-5">
                 <b-icon-calendar-check style="width: 75px; height: 75px; opacity: .3; margin-bottom: 15px;"/>
@@ -182,13 +155,14 @@ import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import _ from 'lodash'
 import Footer from './Shared/Footer.vue';
+import Bar from './Shared/Bar.vue';
 
 export default {
   name: 'DogBoardingHouseAppointment',
 
   components: {
     'date-picker': DatePicker,
-    Footer,
+    Footer, Bar,
   },
 
   data() {
@@ -233,7 +207,7 @@ export default {
     disabledDates(date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      return date < today
+      return date <= today
     },
 
     addNewPet() {
@@ -263,6 +237,7 @@ export default {
     },
 
     calculateTotal() {
+
       if(this.form.interval != null && this.form.petCount > 0) {
         this.summary = {
           days: null,
@@ -307,16 +282,17 @@ export default {
   background-color: transparent !important;
 }
 
-.nav-btn {
-  text-decoration: none;
-  color: #5c002e;
-  transition: color 0.5s, font-size 0.5s;
-  font-size: medium;
+.btn-save {
+  background-color:#5c002e;
+	border-radius:33px;
+  color:#ffffff;
+	border: 0px;
+  text-decoration:none;
 }
 
-.nav-btn:hover {
-
-  font-size: large;
+.btn-save:hover{
+  background-color: rgba(240, 168, 204, 20);
+  color:#ffffff
 }
 
 .card-1 {
@@ -353,10 +329,7 @@ export default {
 
 
     margin: 0px;
-  }
-
-  ;
-
+  };
   .cont {
     display: flex;
     justify-content: center;
@@ -394,13 +367,23 @@ export default {
 }
 
 .addNewPetButton {
+  color: #ffffff;
+  background-color: #5c002e;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 21px);
   bottom: 0px;
-  border: 4px solid #fff;
+  border-radius:33px;
+  border: 0px;
 }
 
+.addNewPetButton:hover {
+  background-color: rgba(240, 168, 204, 20);
+}
+
+.addNewPetButton:active {
+  background-color: rgba(240, 168, 204, 20);
+}
 .sum-row {
   margin-bottom: 10px;
 }

@@ -1,42 +1,14 @@
 <template>
   <div>
-    
       <header style="background-color: #F0A8CC20; ">
-        <div class="container">
-          <b-navbar toggleable="lg" variant="info" style="padding: 0px;">
-            <b-navbar-brand href="/">
-              <img src='../assets/tuti-bunda-logo.png' style=" width: 120px; " alt="Logo">
-            </b-navbar-brand>
-
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-            <b-collapse id="nav-collapse" class="justify-content-end" is-nav>
-              <b-navbar-nav>
-              </b-navbar-nav>
-
-     
-              <b-navbar-nav class="ml-auto " style="color: #5c002e;">
-               
-                <b-nav-item href="#">
-                  <router-link class="nav-btn" :to="{ name: 'HomePage' }">Főoldal</router-link>
-                </b-nav-item>
-                <b-nav-item href="#">
-                  <router-link class="nav-btn" :to="{ name: 'CosmeticsAppointment' }">Kozmetika</router-link>
-                </b-nav-item>
-                <b-nav-item href="#">
-                  <router-link class="nav-btn" :to="{ name: 'DogBoardingHouseAppointment' }">Panzió</router-link>
-                </b-nav-item>
-              </b-navbar-nav>
-            </b-collapse>
-          </b-navbar>
-        </div>
+        <Bar/>
       </header>
     
 
     <b-container class="cont" style="display:flex flex-wrap: wrap;">
-      <h1 style="padding-top: 30px; color: #5c002e;" class="my-5">Foglalj időpontot kozmetikánkba!</h1>
+      <h1 style="padding-top: 30px; color: #5c002e; font-family: 'Crimson Pro', serif;" class="my-5">Foglalj időpontot kozmetikánkba!</h1>
       <b-row class="all">
-        <b-col>
+        <b-col xs="12">
           <div class="card card-1">
             <b-form>
               <b-form-group id="namegroup" label="Név:" label-for="name" description="Kérlek a teljes neved add meg!"
@@ -85,30 +57,23 @@
                 </b-form-group>
 
                 <b-form-group id="dogsizegroup" label="Macska mérete:" label-for="dogsize" class="labels">
-                  <b-form-select id="dogsize" v-model="form.dogsize" class="form-control" :options="dogSizes" />
+                  <b-form-select id="dogsize" v-model="form.dogsize" class="form-control" :options="size" />
                 </b-form-group>
               </div>
               <div v-else>
                 <b-form-group id="servicegroup" label="Kívánt szolgáltatás:" label-for="service1" class="labels">
-                  <b-form-select id="service1" v-model="form.servicetype" class="form-control">
-                    <b-form-select-option value="eu">EÜ kezelés</b-form-select-option>
-                    <b-form-select-option value="fn">Fésülés, nyírás</b-form-select-option>
-                    <b-form-select-option value="kv">Karomvágás</b-form-select-option>
-                    <b-form-select-option value="full">Teljes kozmetika</b-form-select-option>
+                  <b-form-select id="service1" v-model="form.servicetype" class="form-control" :options="servicessmall">
                   </b-form-select>
                 </b-form-group>
                 <b-form-group id="lengthgroup" label="Szőr hosszúság:" label-for="length" class="labels">
-                  <b-form-select id="length" v-model="form.length" class="form-control">
-                    <b-form-select-option value="1">Rövid</b-form-select-option>
-                    <b-form-select-option value="3">Hosszú</b-form-select-option>
+                  <b-form-select id="length" v-model="form.length" class="form-control" :options="fursmall" >
+                    
                   </b-form-select>
                 </b-form-group>
                 <b-form-group id="dogsizegroup" label="Kisállat mérete:" label-for="dogsize" class="labels">
-                  <b-form-select id="dogsize" v-model="form.dogsize" class="form-control">
-                    <b-form-select-option value="s">Kis testű</b-form-select-option>
-                    <b-form-select-option value="m">Közepes testű</b-form-select-option>
-                    <b-form-select-option value="l">Nagy testű</b-form-select-option>
-                  </b-form-select>
+                  <b-form-select id="dogsize" v-model="form.dogsize" class="form-control" >
+                  <b-form-select-option  value="o" >Nem releváns</b-form-select-option></b-form-select>
+                
                 </b-form-group>
               </div>
 
@@ -116,8 +81,8 @@
             </b-form>
 
             <b-card title="Kérlek válassz időpontot" class="mt-4">
-              <div class="row mt-4">
-                <div class="col-6">
+              <b-row class="mt-4">
+                <b-col md="12" lg="6" class="picker">
                   <date-picker 
                     v-model="form.selectedDate" 
                     valueType="format" 
@@ -127,9 +92,10 @@
                     :default-value="new Date()"
                     :disabled-date="getDisabledDates"
                   ></date-picker>
-                </div>
-                <div class="col-6">
+                </b-col>
+                <b-col md="12" lg="6" class="picker" >
                   <date-picker
+                    
                     type="time"
                     valueType="format"
                     :inline="true"
@@ -137,8 +103,8 @@
                     :time-picker-options="timePickerOptions"
                     format="HH:mm"
                   ></date-picker>
-                </div>
-              </div>
+                </b-col>
+              </b-row>
             </b-card>
           </div>
         </b-col>
@@ -167,7 +133,7 @@
                         <b-list-group-item><strong>Kisállat fajtája: </strong>{{ selectedAnimalType ? selectedAnimalType.text : null }}</b-list-group-item>
                         <b-list-group-item><strong>Kiválasztott szolgáltatás: </strong>{{ selectedServiceType ? selectedServiceType.text : null }}</b-list-group-item>
                         <b-list-group-item><strong>Szőr hosszúság: </strong>{{ selectedFurLength ? selectedFurLength.text : null }}</b-list-group-item>
-                        <b-list-group-item><strong>Kutya mérete: </strong>{{ selectedDogSize ? selectedDogSize.text : null }}</b-list-group-item>
+                        <b-list-group-item><strong>Méret: </strong>{{ selectedDogSize ? selectedDogSize.text : null }}</b-list-group-item>
                         <b-list-group-item><strong>Kezelés időtartama: </strong>{{ treatmentDuration }} perc</b-list-group-item>
                         <b-list-group-item><strong>Választott dátum: </strong>{{ form.selectedDate }} {{ form.selectedTime }}</b-list-group-item>
                       </b-list-group>
@@ -184,7 +150,7 @@
                           Elfogadom az általános szerződési feltételekben és az adatvédelmi nyilatkozatban foglaltakat.
                         </b-form-checkbox>
 
-                        <button class="btn btn-primary mt-4">Időpont lefoglalása</button>
+                        <button class="btn btn-save mt-4">Időpont lefoglalása</button>
                       </b-card-body>
                     </b-col>
                   </b-row>
@@ -203,13 +169,13 @@
 </template>
 
 <script>
-import { NavbarPlugin } from 'bootstrap-vue';
 import HomePage from './HomePage.vue';
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
-
 import _ from 'lodash';
 import Footer from '../components/Shared/Footer.vue';
+
+import Bar from '../components/Shared/Bar.vue';
 
 
 export default {
@@ -217,7 +183,7 @@ export default {
 
   components: {
     'date-picker': DatePicker,
-    Footer,
+    Footer, Bar,
   },
 
   data() {
@@ -256,9 +222,21 @@ export default {
         {value: 'full', text: 'Teljes kozmetika'},
       ],
 
+      servicessmall: [
+        {value: 'eu', text: 'EÜ kezelés'},
+        {value: 'fn', text: 'Fésülés, nyírás'},
+        {value: 'kv', text: 'Karomvágás'},
+        {value: 'full', text: 'Teljes kozmetika'},
+      ],
+
       furLengths: [
         {value: 1, text: 'Rövid'},
         {value: 2, text: 'Közepes'},
+        {value: 3, text: 'Hosszú'},
+      ],
+
+      fursmall: [
+        {value: 1, text: 'Rövid'},
         {value: 3, text: 'Hosszú'},
       ],
 
@@ -266,6 +244,10 @@ export default {
         { value: 's', text: 'Kis testű' },
         { value: 'm', text: 'Közepes testű' },
         { value: 'l', text: 'Nagy testű' },
+      ],
+
+      size: [
+          {value: 'o', text: 'Nem releváns'}
       ],
 
       serviceDurations: {
@@ -344,7 +326,7 @@ export default {
       sideimage: require('../assets/tutib-cosmetics-appointment-side-image.png'),
     };
   },
-  components: { HomePage, NavbarPlugin, Footer },
+  components: { HomePage, Footer, Bar },
 
   watch: {
     'form.length': {
@@ -378,9 +360,7 @@ export default {
   },
   methods: {
     calculateTreatmentDuration() {
-      if (['a2', 'a3', 'a4'].includes(this.form.animaltype)) {
-        this.dogsize = 'o';
-      }
+      
       const key = `${this.form.servicetype}-${this.form.length}-${this.form.animaltype}-${this.form.dogsize}`;
       this.treatmentDuration = this.serviceDurations[key] || null;
 
@@ -395,7 +375,7 @@ export default {
     getDisabledDates(date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      return date < today || date > new Date(today.getTime() + 7 * 24 * 3600 * 1000);
+      return date <= today || date > new Date(today.getTime() + 30 * 24 * 3600 * 1000);
     }
   },
 
@@ -424,16 +404,17 @@ export default {
   background-color: transparent !important;
 }
 
-.nav-btn {
-  text-decoration: none;
-  color: #5c002e;
-  transition: color 0.5s, font-size 0.5s;
-  font-size: medium;
+.btn-save {
+  background-color:#5c002e;
+	border-radius:33px;
+  color:#ffffff;
+	border: 0px;
+  text-decoration:none;
 }
 
-.nav-btn:hover {
-
-  font-size: large;
+.btn-save:hover{
+  background-color: rgba(240, 168, 204, 20);
+  color:#ffffff
 }
 
 .card-1 {
@@ -463,6 +444,11 @@ export default {
   padding-top: 15px;
 }
 
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  
+}
+  
+
 @media screen and (max-width: 573px) {
   .all {
     display: flex;
@@ -470,9 +456,7 @@ export default {
 
 
     margin: 0px;
-  }
-
-  ;
+  };
 
   .cont {
     display: flex;

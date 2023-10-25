@@ -4,6 +4,7 @@ import HomePage from '@/components/HomePage'
 import CosmeticsAppointment from '@/components/CosmeticsAppointment'
 import DogBoardingHouseAppointment from '@/components/DogBoardingHouseAppointment'
 import Dashboard from '@/components/Admin/Dashboard'
+import Login from '@/components/Admin/Login'
 
 
 Vue.use(Router)
@@ -29,6 +30,11 @@ export default new Router({
     
     {
       path: '/admin',
+      name: 'Login',
+      component: Login,
+    },
+    {
+      path: '/admin/foglalasok',
       name: 'Dashboard',
       component: Dashboard,
     },

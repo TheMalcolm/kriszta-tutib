@@ -17,7 +17,7 @@
             <b-form @submit="submitForm">
               <b-form-group
                 id="namegroup"
-                label="Név:"
+                label="Gazdi teljes neve:"
                 label-for="name"
                 description="Kérlek a teljes neved add meg!"
                 class="labels"
@@ -30,7 +30,7 @@
               </b-form-group>
               <b-form-group
                 id="emailgroup"
-                label="E-mail:"
+                label="Gazdi e-mail címe:"
                 label-for="email"
                 description=""
                 class="labels"
@@ -44,7 +44,7 @@
               </b-form-group>
               <b-form-group
                 id="phonegroup"
-                label="Telefonszám:"
+                label="Gazdi telefonszáma:"
                 label-for="phone"
                 description=""
                 class="labels"
@@ -239,7 +239,7 @@
               class="mt-4"
             >
               <b-row class="mt-4">
-                <b-col md="12" lg="6" class="picker">
+                <b-col md="12" xl="6" class="picker">
                   <date-picker
                     v-model="form.selectedDate"
                     valueType="format"
@@ -250,7 +250,7 @@
                     :disabled-date="getDisabledDates"
                   ></date-picker>
                 </b-col>
-                <b-col md="12" lg="6" class="picker">
+                <b-col md="12" xl="6" class="picker mt-2 mt-xl-0">
                   <date-picker
                     type="time"
                     valueType="format"

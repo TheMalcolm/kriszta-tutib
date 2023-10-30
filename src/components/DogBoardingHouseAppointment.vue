@@ -70,7 +70,7 @@
                       v-model="form.interval"
                       type="date"
                       range
-                      placeholder="Kérlek add meg a tartózkodás idejét"
+                      placeholder="Kérlek add meg a tartózkodás idejét!"
                       :disabled-date="disabledDates"
                       @change="calculateTotal"
                       :clearable="false"
@@ -96,7 +96,7 @@
                   <div>
                     <b-form-group
                       id="petNameGroup"
-                      label="Kiskedvenced neve:"
+                      label="Kutyus neve:"
                       label-for="petName"
                       class="labels mb-3"
                     >
@@ -109,7 +109,7 @@
 
                     <b-form-group
                       id="petTypeGroup"
-                      label="Kiskedvenced fajtája:"
+                      label="Kutyus fajtája:"
                       label-for="petType"
                       class="labels mb-3"
                     >
@@ -123,7 +123,7 @@
                     <b-form-group
                       id="petCommentsGroup"
                       label="Megjegyzések:"
-                      description="Kérlek tüntesd fel itt amennyiben kutyusod ételallergiával küzd, vagy bármi féle speciális kérésed lenne"
+                      description="Kérlek tüntesd fel itt amennyiben kutyusod ételallergiával küzd, vagy bármi féle speciális kérésed lenne!"
                       label-for="petComments"
                       class="labels mb-4"
                     >
@@ -441,6 +441,7 @@ export default {
       }
 
       console.log(this.summary);
+      console.log(this.form);
     }
   }
 };

@@ -38,197 +38,190 @@
       <b-card
         style="border: none; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);background-color: #F0A8CC20;border-radius: 15px;"
       >
-        <div class="mb-3">
-          <b-button v-b-toggle.collapse-1 class="btn-toggle">
-            Kozmetika
-          </b-button>
-          <b-button v-b-toggle.collapse-2 class="btn-toggle">
-            Panzió
-          </b-button>
-        </div>
+        <b-tabs content-class="">
+          <b-tab title="Kozmetika" active>
+            <b-card class="table-responsive">
+              <h3 style="color: #5c002e; margin-bottom: 0px;">Kozmetika</h3>
+              <b-form-group
+                label=""
+                label-for="filter-input"
+                label-cols-sm="3"
+                label-align-sm="right"
+                label-size="sm"
+                class="mb-3 col-10 col-sm-8"
+              >
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="filter-input"
+                    v-model="filter1"
+                    type="text"
+                    placeholder="Keresés..."
+                    style="margin-right: 8px;"
+                  ></b-form-input>
 
-        <b-collapse visible col="12" id="collapse-1">
-          <b-card class="table-responsive">
-            <h3 style="color: #5c002e; margin-bottom: 0px;">Kozmetika</h3>
-            <b-form-group
-              label=""
-              label-for="filter-input"
-              label-cols-sm="3"
-              label-align-sm="right"
-              label-size="sm"
-              class="mb-3 col-10 col-sm-8"
-            >
-              <b-input-group size="sm">
-                <b-form-input
-                  id="filter-input"
-                  v-model="filter1"
-                  type="text"
-                  placeholder="Keresés..."
-                  style="margin-right: 8px;"
-                ></b-form-input>
+                  <b-input-group-append>
+                    <b-button size="sm" :disabled="!filter" @click="filter = ''"
+                      ><b-icon-x-square
+                    /></b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+              <b-table
+                id="cosmetic"
+                hover
+                small
+                sticky-header
+                :filter="filter1"
+                :fields="fields1"
+                :items="filteredKozm"
+                :per-page="perPage"
+                :current-page="currentPage"
+              >
+                <template #head(date)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #head(petname)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #head(service)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #head(name)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #head(pettype)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #cell(date)="row">
+                  <span class="rowdata">{{ row.item.date }}</span>
+                </template>
+                <template #cell(time)="row">
+                  <span class="rowdata">{{ row.item.time }}</span>
+                </template>
 
-                <b-input-group-append>
-                  <b-button size="sm" :disabled="!filter" @click="filter = ''"
-                    ><b-icon-x-square
+                <template #cell(petname)="row">
+                  <span class="rowdata">{{ row.item.petname }}</span>
+                </template>
+                <template #cell(pettype)="row">
+                  <span class="rowdata">{{
+                    formatAnimal(row.item.pettype)
+                  }}</span>
+                </template>
+                <template #cell(service)="row">
+                  <span class="rowdata">{{
+                    formatService(row.item.service)
+                  }}</span>
+                </template>
+                <template #cell(actions)="row" class="d-block">
+                  <b-button
+                    size="sm"
+                    @click="openModal1(row.item)"
+                    class="mr-1 btn-info"
+                  >
+                    <b-icon-info-circle />
+                  </b-button>
+
+                  <b-button size="sm" @click="showMsgBoxTwo"
+                    ><b-icon-trash
                   /></b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-            <b-table
-              id="cosmetic"
-              hover
-              small
-              sticky-header
-              :filter="filter1"
-              :fields="fields1"
-              :items="filteredKozm"
-              :per-page="perPage"
-              :current-page="currentPage"
-            >
-              <template #head(date)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #head(petname)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #head(service)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #head(name)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #head(pettype)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #cell(date)="row">
-                <span class="rowdata">{{ row.item.date }}</span>
-              </template>
-              <template #cell(time)="row">
-                <span class="rowdata">{{ row.item.time }}</span>
-              </template>
+                </template>
+              </b-table>
 
-              <template #cell(petname)="row">
-                <span class="rowdata">{{ row.item.petname }}</span>
-              </template>
-              <template #cell(pettype)="row">
-                <span class="rowdata">{{
-                  formatAnimal(row.item.pettype)
-                }}</span>
-              </template>
-              <template #cell(service)="row">
-                <span class="rowdata">{{
-                  formatService(row.item.service)
-                }}</span>
-              </template>
-              <template #cell(actions)="row" class="d-block">
-                <b-button
-                  size="sm"
-                  @click="openModal1(row.item)"
-                  class="mr-1 btn-info"
-                >
-                  <b-icon-info-circle />
-                </b-button>
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalItemsKozm"
+                :per-page="perPage"
+                aria-controls="cosmetic"
+                hide-ellipsis
+                variant="primary"
+              ></b-pagination>
+            </b-card>
+          </b-tab>
+          <b-tab title="Panzió">
+            <b-card class="table-responsive">
+              <h3 style="color: #5c002e;">Panzió</h3>
+              <b-form-group
+                label=""
+                label-for="filter-input"
+                label-cols-sm="3"
+                label-align-sm="right"
+                label-size="sm"
+                class="mb-3 col-10 col-sm-8"
+              >
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="filter-input"
+                    v-model="filter2"
+                    type="text"
+                    placeholder="Keresés..."
+                    style="margin-right: 8px;"
+                  ></b-form-input>
 
-                <b-button size="sm" @click="showMsgBoxTwo"
-                  ><b-icon-trash
-                /></b-button>
-              </template>
-            </b-table>
+                  <b-input-group-append>
+                    <b-button size="sm" :disabled="!filter" @click="filter = ''"
+                      ><b-icon-x-square
+                    /></b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+              <b-table
+                id="boarding"
+                hover
+                small
+                :filter="filter2"
+                sticky-header
+                :fields="fields2"
+                :items="filteredPanz"
+                :per-page="perPage"
+                :current-page="currentPage"
+              >
+                <template #head(arrival)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #head(departure)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #head(count)="data">
+                  <span class="table-head">{{ data.label }}</span>
+                </template>
+                <template #cell(arrival)="row">
+                  <span class="rowdata">{{ formatDate(row.item.arrival) }}</span>
+                </template>
+                <template #cell(departure)="row">
+                  <span class="rowdata">{{
+                    formatDate(row.item.departure)
+                  }}</span>
+                </template>
+                <template #cell(count)="row">
+                  <span class="rowdata">{{ row.item.count }}</span>
+                </template>
 
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="totalItemsKozm"
-              :per-page="perPage"
-              aria-controls="cosmetic"
-              hide-ellipsis
-              variant="primary"
-            ></b-pagination>
-          </b-card>
-        </b-collapse>
-        <b-collapse col="12" id="collapse-2">
-          <b-card class="table-responsive">
-            <h3 style="color: #5c002e;">Panzió</h3>
-            <b-form-group
-              label=""
-              label-for="filter-input"
-              label-cols-sm="3"
-              label-align-sm="right"
-              label-size="sm"
-              class="mb-3 col-10 col-sm-8"
-            >
-              <b-input-group size="sm">
-                <b-form-input
-                  id="filter-input"
-                  v-model="filter2"
-                  type="text"
-                  placeholder="Keresés..."
-                  style="margin-right: 8px;"
-                ></b-form-input>
+                <template #cell(actions)="row" class="d-block">
+                  <b-button
+                    size="sm"
+                    @click="openModal2(row.item)"
+                    class="mr-1 btn-info"
+                  >
+                    <b-icon-info-circle />
+                  </b-button>
 
-                <b-input-group-append>
-                  <b-button size="sm" :disabled="!filter" @click="filter = ''"
-                    ><b-icon-x-square
+                  <b-button size="sm" @click="showMsgBoxTwo"
+                    ><b-icon-trash
                   /></b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-            <b-table
-              id="boarding"
-              hover
-              small
-              :filter="filter2"
-              sticky-header
-              :fields="fields2"
-              :items="filteredPanz"
-              :per-page="perPage"
-              :current-page="currentPage"
-            >
-              <template #head(arrival)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #head(departure)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #head(count)="data">
-                <span class="table-head">{{ data.label }}</span>
-              </template>
-              <template #cell(arrival)="row">
-                <span class="rowdata">{{ formatDate(row.item.arrival) }}</span>
-              </template>
-              <template #cell(departure)="row">
-                <span class="rowdata">{{
-                  formatDate(row.item.departure)
-                }}</span>
-              </template>
-              <template #cell(count)="row">
-                <span class="rowdata">{{ row.item.count }}</span>
-              </template>
+                </template>
+              </b-table>
 
-              <template #cell(actions)="row" class="d-block">
-                <b-button
-                  size="sm"
-                  @click="openModal2(row.item)"
-                  class="mr-1 btn-info"
-                >
-                  <b-icon-info-circle />
-                </b-button>
-
-                <b-button size="sm" @click="showMsgBoxTwo"
-                  ><b-icon-trash
-                /></b-button>
-              </template>
-            </b-table>
-
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="totalItemsPanz"
-              :per-page="perPage"
-              aria-controls="boarding"
-              hide-ellipsis
-              variant="primary"
-            ></b-pagination>
-          </b-card>
-        </b-collapse>
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalItemsPanz"
+                :per-page="perPage"
+                aria-controls="boarding"
+                hide-ellipsis
+                variant="primary"
+              ></b-pagination>
+            </b-card>
+          </b-tab>
+        </b-tabs>
       </b-card>
     </b-container>
 
@@ -700,7 +693,8 @@ export default {
         o: "Nem releváns"
       },
       filter1: "",
-      filter2: ""
+      filter2: "",
+      filter: null,
     };
   },
   methods: {

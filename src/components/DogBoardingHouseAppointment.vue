@@ -5,14 +5,17 @@
     </header>
 
     <b-container class="cont" style="display:flex flex-wrap: wrap;">
-      <h1
-        style="padding-top: 30px; color: #5c002e; font-family: 'Crimson Pro', serif;"
-        class="my-5"
-      >
-        Foglalj időpontot panziónkba!
-      </h1>
+      
       <input type="hidden" v-model="form.petCount" />
       <b-row class="all">
+        <div class="col-12">
+          <h1
+            style="padding-top: 30px; color: #5c002e; font-family: 'Crimson Pro', serif;"
+            class="my-5"
+          >
+            Foglalj időpontot panziónkba!
+          </h1>
+        </div>
         <div class="col-lg-9 col-12">
           <b-card class="mb-5">
             <b-card-body style="text-align: left">
@@ -472,6 +475,7 @@ export default {
 
 .cont {
   padding-bottom: 40px;
+  min-height: calc(100vh - 200px);
 }
 
 .labels {

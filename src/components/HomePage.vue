@@ -65,8 +65,12 @@
     >
       <h1>Szolgáltatásaim</h1>
       <b-row cols="12" sm="6">
-        <b-col class="bigico"><img :src="groom" alt="Kozmetika"/></b-col>
-        <b-col class="bigico"><img :src="hotel" alt="Panzio"/></b-col>
+        <b-col class="bigico mb-5 mb-md-0">
+          <img :src="groom" alt="Kozmetika"/>
+        </b-col>
+        <b-col class="bigico mb-5 mb-md-0">
+          <img :src="hotel" alt="Panzio"/>
+        </b-col>
       </b-row>
     </b-container>
     <div>
@@ -102,7 +106,7 @@
         </p>
       </div>
       <b-container lg="10">
-        <b-row cols="4" cols-md="4" cols-lg="4">
+        <b-row cols="2" cols-md="4" cols-lg="4">
           <b-col> <img src="../assets/home_1.jpg" class="gallery" /> </b-col>
           <b-col> <img src="../assets/home_2.jpg" class="gallery" /> </b-col>
           <b-col> <img src="../assets/home_3.jpg" class="gallery" /> </b-col>
@@ -218,9 +222,13 @@ export default {
 
 @media screen and (max-width: 769px) {
   .bigico {
-    transform: scale(0.78) translateX(-25px);
     margin-bottom: 0px;
   }
+
+  .bigico > img{
+    max-width: 60vw;
+  }
+  
   .gallery {
     width: 110px;
     height: 110px;

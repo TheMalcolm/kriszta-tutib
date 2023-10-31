@@ -4,13 +4,15 @@
       <Bar />
     </header>
 
-    <b-container class="cont" style="display:flex flex-wrap: wrap;">
-      <h1
-        style="padding-top: 30px; color: #5c002e; font-family: 'Crimson Pro', serif;"
-        class="my-5"
-      >
-        Foglalj időpontot kozmetikánkba!
-      </h1>
+    <b-container class="cont">
+      <b-col xs="12">
+        <h1
+          style="padding-top: 30px; color: #5c002e; font-family: 'Crimson Pro', serif;"
+          class="my-5"
+        >
+          Foglalj időpontot kozmetikánkba!
+        </h1>
+      </b-col>
       <b-row class="all">
         <b-col xs="12">
           <div class="card card-1">
@@ -280,7 +282,7 @@
                         :src="sideimage"
                         style="object-fit: cover; width: 100%; height: 100%;"
                         alt="Image"
-                        class="rounded-0"
+                        class="rounded-0 side-image"
                       ></b-card-img>
                     </b-col>
                     <b-col md="7">
@@ -674,6 +676,11 @@ export default {
   .cont {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+  }
+
+  .side-image {
+    max-height: 250px;
   }
 }
 

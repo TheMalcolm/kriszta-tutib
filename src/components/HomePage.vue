@@ -44,7 +44,7 @@
               <img :src="heroImage" alt="Tuti bunda kozmetika" class="hero" />
             </b-col>
             <b-col class="bigtext">
-              <h1 class="mb-5 welcome">
+              <h1 class="mb-3 welcome">
                 Üdvözöllek a Tuti-Bunda Kutyakozmetika és Panzió oldalán!
               </h1>
               <p class="mb-3">
@@ -61,15 +61,15 @@
       </div>
     </header>
     <b-container
-      style="padding-top: 70px; padding-left: 0px, color: #5c002e; font-family: 'Crimson Pro', serif;"
+      style="padding-top: 70px; padding-left: 0px; color: #5c002e; font-family: 'Crimson Pro', serif;"
     >
       <h1>Szolgáltatásaim</h1>
       <b-row cols="12" sm="6">
         <b-col class="bigico mb-5 mb-md-0">
-          <img :src="groom" alt="Kozmetika"/>
+          <img :src="groom" alt="Kozmetika" />
         </b-col>
         <b-col class="bigico mb-5 mb-md-0">
-          <img :src="hotel" alt="Panzio"/>
+          <img :src="hotel" alt="Panzio" />
         </b-col>
       </b-row>
     </b-container>
@@ -106,7 +106,7 @@
         </p>
       </div>
       <b-container lg="10">
-        <b-row cols="2" cols-md="4" cols-lg="4">
+        <b-row cols="4" cols-md="4" cols-lg="4">
           <b-col> <img src="../assets/home_1.jpg" class="gallery" /> </b-col>
           <b-col> <img src="../assets/home_2.jpg" class="gallery" /> </b-col>
           <b-col> <img src="../assets/home_3.jpg" class="gallery" /> </b-col>
@@ -225,10 +225,10 @@ export default {
     margin-bottom: 0px;
   }
 
-  .bigico > img{
+  .bigico > img {
     max-width: 60vw;
   }
-  
+
   .gallery {
     width: 110px;
     height: 110px;

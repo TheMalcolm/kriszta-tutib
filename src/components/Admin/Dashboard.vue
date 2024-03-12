@@ -38,8 +38,8 @@
       <b-card
         style="border: none; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);background-color: #F0A8CC20;border-radius: 15px;"
       >
-        <b-tabs content-class="">
-          <b-tab title="Kozmetika" active>
+        <b-tabs content-class="" v-model="tabIndex">
+          <b-tab title="Kozmetika" :title-link-class="linkClass(0)">
             <b-card class="table-responsive">
               <h3 style="color: #5c002e; margin-bottom: 0px;">Kozmetika</h3>
               <b-form-group
@@ -137,7 +137,7 @@
               ></b-pagination>
             </b-card>
           </b-tab>
-          <b-tab title="Panzió">
+          <b-tab title="Panzió" :title-link-class="linkClass(1)">
             <b-card class="table-responsive">
               <h3 style="color: #5c002e;">Panzió</h3>
               <b-form-group
@@ -185,7 +185,9 @@
                   <span class="table-head">{{ data.label }}</span>
                 </template>
                 <template #cell(arrival)="row">
-                  <span class="rowdata">{{ formatDate(row.item.arrival) }}</span>
+                  <span class="rowdata">{{
+                    formatDate(row.item.arrival)
+                  }}</span>
                 </template>
                 <template #cell(departure)="row">
                   <span class="rowdata">{{
@@ -695,9 +697,17 @@ export default {
       filter1: "",
       filter2: "",
       filter: null,
+      tabIndex: 0
     };
   },
   methods: {
+    linkClass(idx) {
+      if (this.tabIndex === idx) {
+        return ["activetab"];
+      } else {
+        return ["text-dark"];
+      }
+    },
     openModal1(item) {
       this.selectedItem1 = item;
       this.showModalinfo1 = true;
@@ -795,6 +805,10 @@ export default {
 <style scoped>
 .bg-info {
   background-color: transparent !important;
+}
+
+.activetab {
+  color: #5c002e;
 }
 
 .pagination-custom a {

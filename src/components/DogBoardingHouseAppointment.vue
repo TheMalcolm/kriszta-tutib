@@ -4,8 +4,6 @@
       <Bar />
     </header>
 
-    <b-button id="show-btn">Launch demo modal</b-button>
-
     <b-modal ref="dogFormModal" id="dogFormModal" title="dogFormModal">
       <template #modal-title>
         Kutya hozzáadása

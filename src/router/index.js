@@ -55,3 +55,15 @@ export default new Router({
  * Admin felület
  *  - /admin/foglalasok
  */
+
+
+/**
+ * 
+ * Panzio
+ *  - Modal-ban történjen a create és az edit
+ *  - Card-ban legyen felsorolva a hozzáadott kisállat, lehessen innen törölni és szerkeszteni
+ * 
+ * Admin
+ *  - Tab komponenssel legyen megoldva a kozmetika (egy tab legyen az érkezés dátuma)
+ * 
+ */

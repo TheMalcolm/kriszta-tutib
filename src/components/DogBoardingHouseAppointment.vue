@@ -4,6 +4,123 @@
       <Bar />
     </header>
 
+    <b-button id="show-btn">Launch demo modal</b-button>
+
+    <b-modal ref="dogFormModal" id="dogFormModal" title="dogFormModal">
+      <template #modal-title>
+        Kutya hozzáadása
+      </template>
+      <div>
+        <b-form-group
+          id="petNameGroup"
+          label="Kutyus neve:"
+          label-for="petName"
+          class="labels mb-3"
+        >
+          <b-form-input
+            id="petName"
+            v-model="form.petDetails.name"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          id="petTypeGroup"
+          label="Kutyus fajtája:"
+          label-for="petType"
+          class="labels mb-3"
+        >
+          <b-form-input
+            id="petType"
+            v-model="form.petDetails.type"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          id="petCommentsGroup"
+          label="Megjegyzések:"
+          description="Kérlek tüntesd fel itt amennyiben kutyusod ételallergiával küzd, vagy bármi féle speciális kérésed lenne!"
+          label-for="petComments"
+          class="labels mb-4"
+        >
+          <b-form-textarea
+            id="petComments"
+            v-model="form.petDetails.comments"
+            required
+          ></b-form-textarea>
+        </b-form-group>
+
+        <b-form-checkbox
+          v-model="form.petDetails.extraFeatures.cosmetics"
+          name="check-button"
+          class="mb-3"
+          switch
+          @change="calculateTotal"
+        >
+          <div>
+            <p class="label mb-1">
+              Teljes kutyakozmetikai szolgáltatás
+              <span class="price">10.000 Ft</span>
+            </p>
+            <p class="description">
+              Szépüljön meg kiskedvence míg nálunk tartózkodik. A
+              teljes kezelés tartalmazza az alapvető egészségügyi
+              kezelést, fésülést, nyírást és karomvágást.
+            </p>
+          </div>
+        </b-form-checkbox>
+
+        <b-form-checkbox
+          v-model="
+            form.petDetails.extraFeatures.extraLongWalking
+          "
+          name="check-button"
+          class="mb-3"
+          switch
+          @change="calculateTotal"
+        >
+          <div>
+            <p class="label mb-1">
+              Extra hosszú séta
+              <span class="price">500 Ft / nap</span>
+            </p>
+            <p class="description">
+              Örökmozgó kutyákra kitalálva, napi 8-10km intenzív
+              séta vár kiskedvencére amennyiben szeretne élni ezzel
+              a lehetőséggel.
+            </p>
+          </div>
+        </b-form-checkbox>
+
+        <b-form-checkbox
+          v-model="
+            form.petDetails.extraFeatures.physiotherapy
+          "
+          name="check-button"
+          class="mb-3"
+          switch
+          @change="calculateTotal"
+        >
+          <div>
+            <p class="label mb-1">
+              Fizioterápiás foglalkozás
+              <span class="price">5.000 Ft</span>
+            </p>
+            <p class="description">
+              A fizioterápia a természet energiáival történő
+              gyógyítást jelenti, s mint ilyen, kíméletes,
+              ugyanakkor meglehetősen hatékony segítség az
+              elsősorban mozgásszervrendszert érintő betegségek,
+              problémák gyógyulásában.
+            </p>
+          </div>
+        </b-form-checkbox>
+
+        <b-button size="sm" @click="submitModalForm()"><b-icon-plus /> Mentés</b-button>
+      </div>
+    </b-modal>
+
     <b-container class="cont" style="display:flex flex-wrap: wrap;">
       
       <input type="hidden" v-model="form.petCount" />
@@ -82,131 +199,30 @@
                 </div>
               </div>
 
-              <b-button class="addNewPetButton" @click="addNewPet"
+              <b-button class="addNewPetButton" @click="showModal"
                 ><b-icon-plus /> Kutya hozzáadása</b-button
               >
             </b-card-body>
           </b-card>
-
           <div class="row">
             <div
               class="col-lg-6 col-12"
-              v-for="(pet, index) in form.petDetails"
+              v-for="(pet, index) in entries"
               :key="index"
             >
               <b-card class="mb-3" style="text-align: left;">
                 <b-card-body>
-                  <div>
-                    <b-form-group
-                      id="petNameGroup"
-                      label="Kutyus neve:"
-                      label-for="petName"
-                      class="labels mb-3"
-                    >
-                      <b-form-input
-                        id="petName"
-                        v-model="form.petDetails[index].name"
-                        required
-                      ></b-form-input>
-                    </b-form-group>
+                  <h6><strong>{{ pet.name }} ({{ pet.type }})</strong></h6>
+                  <p>Megjegyzés: <i>{{ pet.comments }}</i></p>
 
-                    <b-form-group
-                      id="petTypeGroup"
-                      label="Kutyus fajtája:"
-                      label-for="petType"
-                      class="labels mb-3"
-                    >
-                      <b-form-input
-                        id="petType"
-                        v-model="form.petDetails[index].type"
-                        required
-                      ></b-form-input>
-                    </b-form-group>
+                  <p>
+                    <b-icon-check-circle-fill v-if="pet.extraFeatures.cosmetics === true" /> <b-icon-x-circle-fill v-else/> Kutyakozmetika <br>
+                    <b-icon-check-circle-fill v-if="pet.extraFeatures.extraLongWalking === true" /> <b-icon-x-circle-fill v-else/> Extra hosszú séta <br>
+                    <b-icon-check-circle-fill v-if="pet.extraFeatures.physiotherapy === true" /> <b-icon-x-circle-fill v-else/> Fizioterápia
+                  </p>
 
-                    <b-form-group
-                      id="petCommentsGroup"
-                      label="Megjegyzések:"
-                      description="Kérlek tüntesd fel itt amennyiben kutyusod ételallergiával küzd, vagy bármi féle speciális kérésed lenne!"
-                      label-for="petComments"
-                      class="labels mb-4"
-                    >
-                      <b-form-textarea
-                        id="petComments"
-                        v-model="form.petDetails[index].comments"
-                        required
-                      ></b-form-textarea>
-                    </b-form-group>
-
-                    <b-form-checkbox
-                      v-model="form.petDetails[index].extraFeatures.cosmetics"
-                      name="check-button"
-                      class="mb-3"
-                      switch
-                      @change="calculateTotal"
-                    >
-                      <div>
-                        <p class="label mb-1">
-                          Teljes kutyakozmetikai szolgáltatás
-                          <span class="price">10.000 Ft</span>
-                        </p>
-                        <p class="description">
-                          Szépüljön meg kiskedvence míg nálunk tartózkodik. A
-                          teljes kezelés tartalmazza az alapvető egészségügyi
-                          kezelést, fésülést, nyírást és karomvágást.
-                        </p>
-                      </div>
-                    </b-form-checkbox>
-
-                    <b-form-checkbox
-                      v-model="
-                        form.petDetails[index].extraFeatures.extraLongWalking
-                      "
-                      name="check-button"
-                      class="mb-3"
-                      switch
-                      @change="calculateTotal"
-                    >
-                      <div>
-                        <p class="label mb-1">
-                          Extra hosszú séta
-                          <span class="price">500 Ft / nap</span>
-                        </p>
-                        <p class="description">
-                          Örökmozgó kutyákra kitalálva, napi 8-10km intenzív
-                          séta vár kiskedvencére amennyiben szeretne élni ezzel
-                          a lehetőséggel.
-                        </p>
-                      </div>
-                    </b-form-checkbox>
-
-                    <b-form-checkbox
-                      v-model="
-                        form.petDetails[index].extraFeatures.physiotherapy
-                      "
-                      name="check-button"
-                      class="mb-3"
-                      switch
-                      @change="calculateTotal"
-                    >
-                      <div>
-                        <p class="label mb-1">
-                          Fizioterápiás foglalkozás
-                          <span class="price">5.000 Ft</span>
-                        </p>
-                        <p class="description">
-                          A fizioterápia a természet energiáival történő
-                          gyógyítást jelenti, s mint ilyen, kíméletes,
-                          ugyanakkor meglehetősen hatékony segítség az
-                          elsősorban mozgásszervrendszert érintő betegségek,
-                          problémák gyógyulásában.
-                        </p>
-                      </div>
-                    </b-form-checkbox>
-
-                    <b-button size="sm" @click="removePet(index)"
-                      ><b-icon-trash /> Törlés</b-button
-                    >
-                  </div>
+                  <b-button size="sm" @click="removePet(index)" variant="danger"><b-icon-trash /> Törlés</b-button>
+                  <b-button size="sm" @click="editDoggo(index)" variant="outline-primary"><b-icon-pencil-square /> Módosítás</b-button>
                 </b-card-body>
               </b-card>
             </div>
@@ -334,7 +350,16 @@ export default {
       form: {
         interval: null,
         petCount: null,
-        petDetails: [],
+        petDetails: {
+          name: null,
+          type: null,
+          extraFeatures: {
+            cosmetics: false,
+            extraLongWalking: false,
+            physiotherapy: false,
+          },
+          comments: null
+        },
         ownerDetails: {
           name: null,
           email: null,
@@ -342,6 +367,8 @@ export default {
         },
         gdprAccepted: "not_accepted"
       },
+      underEditing: null,
+      entries: [],
 
       prices: {
         // Base price per dog per day
@@ -368,19 +395,30 @@ export default {
   },
 
   methods: {
+    showModal() {
+      if (this.form.petCount >= 6) {
+        alert("Maximum 6 kiskedvenc adható hozzá!");
+        return;
+      }
+
+      this.$refs['dogFormModal'].show()
+    },
+
     disabledDates(date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       return date <= today;
     },
 
-    addNewPet() {
-      if (this.form.petCount >= 6) {
-        alert("Maximum 6 kiskedvenc adható hozzá!");
-        return;
+    submitModalForm() {
+
+      if(this.underEditing !== null) {
+        this.entries[this.underEditing] = this.form.petDetails
+      } else {
+        this.entries.push(this.form.petDetails)
       }
 
-      this.form.petDetails.push({
+      this.form.petDetails = {
         name: null,
         type: null,
         comments: null,
@@ -389,13 +427,21 @@ export default {
           extraLongWalking: false,
           physiotherapy: false
         }
-      });
+      };
+      this.underEditing = null
       this.form.petCount++;
       this.calculateTotal();
+      this.$refs['dogFormModal'].hide()
+    },
+
+    editDoggo(index) {
+      this.underEditing = index
+      this.form.petDetails = this.entries[index]
+      this.$refs['dogFormModal'].show()
     },
 
     removePet(index) {
-      this.form.petDetails.splice(index, 1);
+      this.entries.splice(index, 1);
       this.form.petCount--;
       this.calculateTotal();
     },
@@ -419,7 +465,7 @@ export default {
         this.summary.total +=
           this.summary.days * this.prices.basePrice * this.form.petCount;
 
-        for (const pet of this.form.petDetails) {
+        for (const pet of this.entries) {
           if (pet.extraFeatures.cosmetics == true) {
             this.summary.cosmeticsCount++;
           }
@@ -442,9 +488,6 @@ export default {
       } else {
         this.summary.total = 0.0;
       }
-
-      console.log(this.summary);
-      console.log(this.form);
     }
   }
 };

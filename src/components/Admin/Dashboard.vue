@@ -66,14 +66,17 @@
                   </b-input-group-append>
                 </b-input-group>
               </b-form-group>
-              <b-table
+
+              <b-tabs content-class="mt-3">
+                <b-tab :title="typeof items[0] !== 'undefined' ? items[0].date : ''" v-for="(items, date) in kozm" :key="date">
+                  <b-table
                 id="cosmetic"
                 hover
                 small
                 sticky-header
                 :filter="filter1"
                 :fields="fields1"
-                :items="filteredKozm"
+                :items="items"
                 :per-page="perPage"
                 :current-page="currentPage"
               >
@@ -135,6 +138,10 @@
                 hide-ellipsis
                 variant="primary"
               ></b-pagination>
+                </b-tab>
+              </b-tabs>
+
+              
             </b-card>
           </b-tab>
           <b-tab title="Panzió">
@@ -329,6 +336,7 @@
 </template>
 
 <script>
+import * as _ from 'lodash'
 export default {
   name: "Dashboard",
 
@@ -755,7 +763,13 @@ export default {
         .catch(err => {
           // An error occurred
         });
-    }
+    },
+    sortObject(obj) {
+      return Object.keys(obj).sort().reduce(function (result, key) {
+          result[key] = obj[key];
+          return result;
+    }, {});
+  }
   },
   computed: {
     filteredKozm() {
@@ -786,6 +800,9 @@ export default {
     }
   },
   mounted() {
+
+    this.kozm = Object.values(this.sortObject(_.groupBy(this.kozm, 'date')))
+
     this.totalItemsKozm = this.filteredKozm.length;
     this.totalItemsPanz = this.filteredPanz.length;
   }

@@ -414,6 +414,7 @@ export default {
         this.entries[this.underEditing] = this.form.petDetails
       } else {
         this.entries.push(this.form.petDetails)
+        this.form.petCount++;
       }
 
       this.form.petDetails = {
@@ -427,7 +428,6 @@ export default {
         }
       };
       this.underEditing = null
-      this.form.petCount++;
       this.calculateTotal();
       this.$refs['dogFormModal'].hide()
     },

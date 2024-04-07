@@ -21,7 +21,7 @@
             >
           </b-nav-item>
           <b-nav-item href="#">
-            <router-link class="nav-btn" :to="{ name: 'CosmeticsAppointment' }"
+            <router-link class="nav-btn" :to="{ name: 'Cosmetics' }"
               >Kozmetika</router-link
             >
           </b-nav-item>

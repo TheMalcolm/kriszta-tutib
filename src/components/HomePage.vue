@@ -1,64 +1,29 @@
 <template>
   <div>
     <header style="background-color: #F0A8CC20">
-      <div class="container">
-        <b-navbar toggleable="lg" variant="info" style="padding: 0px;">
-          <b-navbar-brand href="/">
-            <img :src="logo" style=" width: 120px;" alt="Logo" />
-          </b-navbar-brand>
-
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-          <b-collapse id="nav-collapse" class="justify-content-end" is-nav>
-            <b-navbar-nav> </b-navbar-nav>
-
-            <!-- Right aligned nav items -->
-            <b-navbar-nav pills class="ml-auto " style="color: #5c002e;">
-              <!-- Using 'button-content' slot -->
-              <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'HomePage' }"
-                  >Főoldal</router-link
-                >
-              </b-nav-item>
-              <b-nav-item href="#">
-                <router-link
-                  class="nav-btn"
-                  :to="{ name: 'CosmeticsAppointment' }"
-                  >Kozmetika</router-link
-                >
-              </b-nav-item>
-              <b-nav-item href="#">
-                <router-link
-                  class="nav-btn"
-                  :to="{ name: 'DogBoardingHouseAppointment' }"
-                  >Panzió</router-link
-                >
-              </b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
-
-        <b-container>
-          <b-row>
-            <b-col class="herocol">
-              <img :src="heroImage" alt="Tuti bunda kozmetika" class="hero" />
-            </b-col>
-            <b-col class="bigtext">
-              <h1 class="mb-3 welcome">
-                Üdvözöllek a Tuti-Bunda Kutyakozmetika és Panzió oldalán!
-              </h1>
-              <p class="mb-3">
-                Kedves látogató, örülök, hogy az oldalra tévedtél. Kérlek
-                böngéssz bátran, ismerd meg a munkásságom és foglalj időpontot
-                kedvedre!
-              </p>
-              <button class="btn btn-primary align-self-center cta-button">
-                Rólam
-              </button>
-            </b-col>
-          </b-row>
-        </b-container>
-      </div>
+      <Bar />
+      <b-container>
+        <b-row>
+          <b-col class="herocol">
+            <img :src="heroImage" alt="Tuti bunda kozmetika" class="hero" />
+          </b-col>
+          <b-col class="bigtext">
+            <h1 class="mb-3 welcome">
+              Üdvözöllek a Tuti-Bunda Kutyakozmetika és Panzió oldalán!
+            </h1>
+            <p class="mb-3">
+              Kedves látogató, örülök, hogy az oldalra tévedtél. Kérlek böngéssz
+              bátran, ismerd meg a munkásságom és foglalj időpontot kedvedre!
+            </p>
+            <button
+              class="btn btn-primary align-self-center cta-button"
+              @click="scrollToAboutSection"
+            >
+              Rólam
+            </button>
+          </b-col>
+        </b-row>
+      </b-container>
     </header>
     <b-container
       style="padding-top: 70px; padding-left: 0px; color: #5c002e; font-family: 'Crimson Pro', serif;"
@@ -66,7 +31,9 @@
       <h1>Szolgáltatásaim</h1>
       <b-row cols="12" sm="6">
         <b-col class="bigico mb-5 mb-md-0">
-          <img :src="groom" alt="Kozmetika" />
+          <router-link :to="{ name: 'Cosmetics' }"
+            ><img :src="groom" alt="Kozmetika"
+          /></router-link>
         </b-col>
         <b-col class="bigico mb-5 mb-md-0">
           <img :src="hotel" alt="Panzio" />
@@ -74,7 +41,7 @@
       </b-row>
     </b-container>
     <div>
-      <div style="padding-bottom: 40px;">
+      <div style="padding-bottom: 40px;" id="about">
         <div
           class="container"
           style="background-color: #5c002e; border-radius: 15px; margin-top: 30px;"
@@ -126,6 +93,7 @@
 <script>
 import router from "../router";
 import Footer from "../components/Shared/Footer.vue";
+import Bar from "./Shared/Bar.vue";
 
 export default {
   name: "HomePage",
@@ -137,7 +105,13 @@ export default {
       hotel: require("../assets/hotelico.png")
     };
   },
-  components: { router, Footer }
+  components: { router, Footer, Bar },
+  methods: {
+    scrollToAboutSection() {
+      var aboutSection = document.getElementById("about");
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 };
 </script>
 

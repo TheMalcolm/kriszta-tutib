@@ -1,46 +1,57 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HomePage from '@/components/HomePage'
-import CosmeticsAppointment from '@/components/CosmeticsAppointment'
-import DogBoardingHouseAppointment from '@/components/DogBoardingHouseAppointment'
-import Dashboard from '@/components/Admin/Dashboard'
-import Login from '@/components/Admin/Login'
+import Vue from "vue";
+import Router from "vue-router";
+import HomePage from "@/components/HomePage";
+import CosmeticsAppointment from "@/components/CosmeticsAppointment";
+import DogBoardingHouseAppointment from "@/components/DogBoardingHouseAppointment";
+import Dashboard from "@/components/Admin/Dashboard";
+import Login from "@/components/Admin/Login";
+import Cosmetics from "@/components/Cosmetics";
 
-
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '/',
-      name: 'HomePage',
+      path: "/",
+      name: "HomePage",
       component: HomePage
     },
     {
-      path: '/idopontfoglalas/kozmetika',
-      name: 'CosmeticsAppointment',
+      path: "/idopontfoglalas/kozmetika",
+      name: "CosmeticsAppointment",
       component: CosmeticsAppointment
     },
     {
-      path: '/idopontfoglalas/panzio',
-      name: 'DogBoardingHouseAppointment',
+      path: "/idopontfoglalas/panzio",
+      name: "DogBoardingHouseAppointment",
       component: DogBoardingHouseAppointment
     },
-    
-    {
-      path: '/admin',
-      name: 'Login',
-      component: Login,
-    },
-    {
-      path: '/admin/foglalasok',
-      name: 'Dashboard',
-      component: Dashboard,
-    },
-  ]
-})
 
+    {
+      path: "/admin",
+      name: "Login",
+      component: Login
+    },
+    {
+      path: "/admin/foglalasok",
+      name: "Dashboard",
+      component: Dashboard
+    },
+    {
+      path: "/kozmetika",
+      name: "Cosmetics",
+      component: Cosmetics
+    }
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
+});
 
 /**
  * Főoldal
@@ -51,19 +62,18 @@ export default new Router({
  *  - /idopontfoglalas/panzio
  *  - Kalkulátor
  *    - /kalkulator
- * 
+ *
  * Admin felület
  *  - /admin/foglalasok
  */
 
-
 /**
- * 
+ *
  * Panzio
  *  - Modal-ban történjen a create és az edit
  *  - Card-ban legyen felsorolva a hozzáadott kisállat, lehessen innen törölni és szerkeszteni
- * 
+ *
  * Admin
  *  - Tab komponenssel legyen megoldva a kozmetika (egy tab legyen az érkezés dátuma)
- * 
+ *
  */

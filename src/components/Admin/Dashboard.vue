@@ -68,80 +68,82 @@
               </b-form-group>
 
               <b-tabs content-class="mt-3">
-                <b-tab :title="typeof items[0] !== 'undefined' ? items[0].date : ''" v-for="(items, date) in kozm" :key="date">
+                <b-tab
+                  :title="typeof items[0] !== 'undefined' ? items[0].date : ''"
+                  v-for="(items, date) in kozm"
+                  :key="date"
+                >
                   <b-table
-                id="cosmetic"
-                hover
-                small
-                sticky-header
-                :filter="filter1"
-                :fields="fields1"
-                :items="items"
-                :per-page="perPage"
-                :current-page="currentPage"
-              >
-                <template #head(date)="data">
-                  <span class="table-head">{{ data.label }}</span>
-                </template>
-                <template #head(petname)="data">
-                  <span class="table-head">{{ data.label }}</span>
-                </template>
-                <template #head(service)="data">
-                  <span class="table-head">{{ data.label }}</span>
-                </template>
-                <template #head(name)="data">
-                  <span class="table-head">{{ data.label }}</span>
-                </template>
-                <template #head(pettype)="data">
-                  <span class="table-head">{{ data.label }}</span>
-                </template>
-                <template #cell(date)="row">
-                  <span class="rowdata">{{ row.item.date }}</span>
-                </template>
-                <template #cell(time)="row">
-                  <span class="rowdata">{{ row.item.time }}</span>
-                </template>
-
-                <template #cell(petname)="row">
-                  <span class="rowdata">{{ row.item.petname }}</span>
-                </template>
-                <template #cell(pettype)="row">
-                  <span class="rowdata">{{
-                    formatAnimal(row.item.pettype)
-                  }}</span>
-                </template>
-                <template #cell(service)="row">
-                  <span class="rowdata">{{
-                    formatService(row.item.service)
-                  }}</span>
-                </template>
-                <template #cell(actions)="row" class="d-block">
-                  <b-button
-                    size="sm"
-                    @click="openModal1(row.item)"
-                    class="mr-1 btn-info"
+                    id="cosmetic"
+                    hover
+                    small
+                    sticky-header
+                    :filter="filter1"
+                    :fields="fields1"
+                    :items="items"
+                    :per-page="perPage"
+                    :current-page="currentPage"
                   >
-                    <b-icon-info-circle />
-                  </b-button>
+                    <template #head(date)="data">
+                      <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(petname)="data">
+                      <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(service)="data">
+                      <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(name)="data">
+                      <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(pettype)="data">
+                      <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #cell(date)="row">
+                      <span class="rowdata">{{ row.item.date }}</span>
+                    </template>
+                    <template #cell(time)="row">
+                      <span class="rowdata">{{ row.item.time }}</span>
+                    </template>
 
-                  <b-button size="sm" @click="showMsgBoxTwo"
-                    ><b-icon-trash
-                  /></b-button>
-                </template>
-              </b-table>
+                    <template #cell(petname)="row">
+                      <span class="rowdata">{{ row.item.petname }}</span>
+                    </template>
+                    <template #cell(pettype)="row">
+                      <span class="rowdata">{{
+                        formatAnimal(row.item.pettype)
+                      }}</span>
+                    </template>
+                    <template #cell(service)="row">
+                      <span class="rowdata">{{
+                        formatService(row.item.service)
+                      }}</span>
+                    </template>
+                    <template #cell(actions)="row" class="d-block">
+                      <b-button
+                        size="sm"
+                        @click="openModal1(row.item)"
+                        class="mr-1 btn-info"
+                      >
+                        <b-icon-info-circle />
+                      </b-button>
 
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="totalItemsKozm"
-                :per-page="perPage"
-                aria-controls="cosmetic"
-                hide-ellipsis
-                variant="primary"
-              ></b-pagination>
+                      <b-button size="sm" @click="showMsgBoxTwo"
+                        ><b-icon-trash
+                      /></b-button>
+                    </template>
+                  </b-table>
+
+                  <b-pagination
+                    v-model="currentPage"
+                    :total-rows="totalItemsKozm"
+                    :per-page="perPage"
+                    aria-controls="cosmetic"
+                    hide-ellipsis
+                    variant="primary"
+                  ></b-pagination>
                 </b-tab>
               </b-tabs>
-
-              
             </b-card>
           </b-tab>
           <b-tab title="Panzió" :title-link-class="linkClass(1)">
@@ -338,7 +340,7 @@
 </template>
 
 <script>
-import * as _ from 'lodash'
+import * as _ from "lodash";
 export default {
   name: "Dashboard",
 
@@ -775,11 +777,13 @@ export default {
         });
     },
     sortObject(obj) {
-      return Object.keys(obj).sort().reduce(function (result, key) {
+      return Object.keys(obj)
+        .sort()
+        .reduce(function(result, key) {
           result[key] = obj[key];
           return result;
-    }, {});
-  }
+        }, {});
+    }
   },
   computed: {
     filteredKozm() {
@@ -810,8 +814,7 @@ export default {
     }
   },
   mounted() {
-
-    this.kozm = Object.values(this.sortObject(_.groupBy(this.kozm, 'date')))
+    this.kozm = Object.values(this.sortObject(_.groupBy(this.kozm, "date")));
 
     this.totalItemsKozm = this.filteredKozm.length;
     this.totalItemsPanz = this.filteredPanz.length;

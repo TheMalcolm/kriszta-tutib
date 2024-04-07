@@ -59,20 +59,18 @@
           <div>
             <p class="label mb-1">
               Teljes kutyakozmetikai szolgáltatás
-              <span class="price">10.000 Ft</span>
+              <span class="price">6.000 Ft</span>
             </p>
             <p class="description">
-              Szépüljön meg kiskedvence míg nálunk tartózkodik. A
-              teljes kezelés tartalmazza az alapvető egészségügyi
-              kezelést, fésülést, nyírást és karomvágást.
+              Szépüljön meg kiskedvence míg nálunk tartózkodik. A teljes kezelés
+              tartalmazza az alapvető egészségügyi kezelést, fésülést, nyírást
+              és karomvágást.
             </p>
           </div>
         </b-form-checkbox>
 
         <b-form-checkbox
-          v-model="
-            form.petDetails.extraFeatures.extraLongWalking
-          "
+          v-model="form.petDetails.extraFeatures.extraLongWalking"
           name="check-button"
           class="mb-3"
           switch
@@ -84,17 +82,14 @@
               <span class="price">500 Ft / nap</span>
             </p>
             <p class="description">
-              Örökmozgó kutyákra kitalálva, napi 8-10km intenzív
-              séta vár kiskedvencére amennyiben szeretne élni ezzel
-              a lehetőséggel.
+              Örökmozgó kutyákra kitalálva, napi 8-10km intenzív séta vár
+              kiskedvencére amennyiben szeretne élni ezzel a lehetőséggel.
             </p>
           </div>
         </b-form-checkbox>
 
         <b-form-checkbox
-          v-model="
-            form.petDetails.extraFeatures.physiotherapy
-          "
+          v-model="form.petDetails.extraFeatures.physiotherapy"
           name="check-button"
           class="mb-3"
           switch
@@ -106,21 +101,21 @@
               <span class="price">5.000 Ft</span>
             </p>
             <p class="description">
-              A fizioterápia a természet energiáival történő
-              gyógyítást jelenti, s mint ilyen, kíméletes,
-              ugyanakkor meglehetősen hatékony segítség az
-              elsősorban mozgásszervrendszert érintő betegségek,
-              problémák gyógyulásában.
+              A fizioterápia a természet energiáival történő gyógyítást jelenti,
+              s mint ilyen, kíméletes, ugyanakkor meglehetősen hatékony segítség
+              az elsősorban mozgásszervrendszert érintő betegségek, problémák
+              gyógyulásában.
             </p>
           </div>
         </b-form-checkbox>
 
-        <b-button size="sm" @click="submitModalForm()"><b-icon-plus /> Mentés</b-button>
+        <b-button size="sm" @click="submitModalForm()"
+          ><b-icon-plus /> Mentés</b-button
+        >
       </div>
     </b-modal>
 
-    <b-container class="cont" style="display:flex flex-wrap: wrap;">
-      
+    <b-container class="cont" style="display:flex; flex-wrap: wrap;">
       <input type="hidden" v-model="form.petCount" />
       <b-row class="all">
         <div class="col-12">
@@ -210,17 +205,37 @@
             >
               <b-card class="mb-3" style="text-align: left;">
                 <b-card-body>
-                  <h6><strong>{{ pet.name }} ({{ pet.type }})</strong></h6>
-                  <p>Megjegyzés: <i>{{ pet.comments }}</i></p>
-
+                  <h6>
+                    <strong>{{ pet.name }} ({{ pet.type }})</strong>
+                  </h6>
                   <p>
-                    <b-icon-check-circle-fill v-if="pet.extraFeatures.cosmetics === true" /> <b-icon-x-circle-fill v-else/> Kutyakozmetika <br>
-                    <b-icon-check-circle-fill v-if="pet.extraFeatures.extraLongWalking === true" /> <b-icon-x-circle-fill v-else/> Extra hosszú séta <br>
-                    <b-icon-check-circle-fill v-if="pet.extraFeatures.physiotherapy === true" /> <b-icon-x-circle-fill v-else/> Fizioterápia
+                    Megjegyzés: <i>{{ pet.comments }}</i>
                   </p>
 
-                  <b-button size="sm" @click="removePet(index)" variant="danger"><b-icon-trash /> Törlés</b-button>
-                  <b-button size="sm" @click="editDoggo(index)" variant="outline-primary"><b-icon-pencil-square /> Módosítás</b-button>
+                  <p>
+                    <b-icon-check-circle-fill
+                      v-if="pet.extraFeatures.cosmetics === true"
+                    />
+                    <b-icon-x-circle-fill v-else /> Kutyakozmetika <br />
+                    <b-icon-check-circle-fill
+                      v-if="pet.extraFeatures.extraLongWalking === true"
+                    />
+                    <b-icon-x-circle-fill v-else /> Extra hosszú séta <br />
+                    <b-icon-check-circle-fill
+                      v-if="pet.extraFeatures.physiotherapy === true"
+                    />
+                    <b-icon-x-circle-fill v-else /> Fizioterápia
+                  </p>
+
+                  <b-button size="sm" @click="removePet(index)" variant="danger"
+                    ><b-icon-trash /> Törlés</b-button
+                  >
+                  <b-button
+                    size="sm"
+                    @click="editDoggo(index)"
+                    variant="outline-primary"
+                    ><b-icon-pencil-square /> Módosítás</b-button
+                  >
                 </b-card-body>
               </b-card>
             </div>
@@ -354,7 +369,7 @@ export default {
           extraFeatures: {
             cosmetics: false,
             extraLongWalking: false,
-            physiotherapy: false,
+            physiotherapy: false
           },
           comments: null
         },
@@ -373,7 +388,7 @@ export default {
         basePrice: 4500,
 
         // Cosmetics price per dog per staying
-        cosmetics: 10000,
+        cosmetics: 6000,
 
         // Extra long walk per dog per day
         extraLongWalking: 500,
@@ -399,7 +414,7 @@ export default {
         return;
       }
 
-      this.$refs['dogFormModal'].show()
+      this.$refs["dogFormModal"].show();
     },
 
     disabledDates(date) {
@@ -409,11 +424,10 @@ export default {
     },
 
     submitModalForm() {
-
-      if(this.underEditing !== null) {
-        this.entries[this.underEditing] = this.form.petDetails
+      if (this.underEditing !== null) {
+        this.entries[this.underEditing] = this.form.petDetails;
       } else {
-        this.entries.push(this.form.petDetails)
+        this.entries.push(this.form.petDetails);
         this.form.petCount++;
       }
 
@@ -427,15 +441,15 @@ export default {
           physiotherapy: false
         }
       };
-      this.underEditing = null
+      this.underEditing = null;
       this.calculateTotal();
-      this.$refs['dogFormModal'].hide()
+      this.$refs["dogFormModal"].hide();
     },
 
     editDoggo(index) {
-      this.underEditing = index
-      this.form.petDetails = this.entries[index]
-      this.$refs['dogFormModal'].show()
+      this.underEditing = index;
+      this.form.petDetails = this.entries[index];
+      this.$refs["dogFormModal"].show();
     },
 
     removePet(index) {

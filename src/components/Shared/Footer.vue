@@ -12,14 +12,14 @@
           </div>
           <div>
             <router-link
-              :to="{ name: 'CosmeticsAppointment' }"
+              :to="{ name: 'Cosmetics' }"
               class="text-decoration-none text-reset"
               >Kozmetika</router-link
             >
           </div>
           <div>
             <router-link
-              :to="{ name: 'DogBoardingHouseAppointment' }"
+              :to="{ name: 'DogBoarding' }"
               class="text-decoration-none text-reset "
               >Panzió</router-link
             >

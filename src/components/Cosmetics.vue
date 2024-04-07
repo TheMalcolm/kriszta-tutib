@@ -169,44 +169,44 @@ export default {
   data() {
     return {
       fullcosmetics: [
-        { type: "Rövid szőrű kutya", price: "5000 Ft-tól" },
-        { type: "Félhosszú szőrű kutya", price: "7000 Ft-tól" },
-        { type: "Hosszú szőrű kutya", price: "9000 Ft-tól" },
-        { type: "Rövid szőrű macska", price: "4000 Ft-tól" },
-        { type: "Félhosszú szőrű macska", price: "5000 Ft-tól" },
-        { type: "Hosszú szőrű macska", price: "6000 Ft-tól" },
-        { type: "Rövid szőrű nyulak", price: "3000 Ft-tól" },
-        { type: "Hosszú szőrű nyulak", price: "4000 Ft-tól" },
-        { type: "Rövid szőrű tengerimalacok", price: "3000 Ft-tól" },
-        { type: "Hosszú szőrű tengerimalacok", price: "4000 Ft-tól" }
+        { type: "Rövid szőrű kutya", price: "5.000 Ft-tól" },
+        { type: "Félhosszú szőrű kutya", price: "7.000 Ft-tól" },
+        { type: "Hosszú szőrű kutya", price: "9.000 Ft-tól" },
+        { type: "Rövid szőrű macska", price: "4.000 Ft-tól" },
+        { type: "Félhosszú szőrű macska", price: "5.000 Ft-tól" },
+        { type: "Hosszú szőrű macska", price: "6.000 Ft-tól" },
+        { type: "Rövid szőrű nyulak", price: "3.000 Ft-tól" },
+        { type: "Hosszú szőrű nyulak", price: "4.000 Ft-tól" },
+        { type: "Rövid szőrű tengerimalacok", price: "3.000 Ft-tól" },
+        { type: "Hosszú szőrű tengerimalacok", price: "4.000 Ft-tól" }
       ],
       ffn: [
-        { type: "Rövid szőrű kutya", price: "4000 Ft-tól" },
-        { type: "Félhosszú szőrű kutya", price: "6000 Ft-tól" },
-        { type: "Hosszú szőrű kutya", price: "8000 Ft-tól" },
-        { type: "Rövid szőrű macska", price: "3000 Ft-tól" },
-        { type: "Félhosszú szőrű macska", price: "4000 Ft-tól" },
-        { type: "Hosszú szőrű macska", price: "5000 Ft-tól" }
+        { type: "Rövid szőrű kutya", price: "4.000 Ft-tól" },
+        { type: "Félhosszú szőrű kutya", price: "6.000 Ft-tól" },
+        { type: "Hosszú szőrű kutya", price: "8.000 Ft-tól" },
+        { type: "Rövid szőrű macska", price: "3.000 Ft-tól" },
+        { type: "Félhosszú szőrű macska", price: "4.000 Ft-tól" },
+        { type: "Hosszú szőrű macska", price: "5.000 Ft-tól" }
       ],
       fn: [
-        { type: "Rövid szőrű kutya", price: "3000 Ft-tól" },
-        { type: "Félhosszú szőrű kutya", price: "4000 Ft-tól" },
-        { type: "Hosszú szőrű kutya", price: "5000 Ft-tól" },
-        { type: "Rövid szőrű macska", price: "2000 Ft-tól" },
-        { type: "Félhosszú szőrű macska", price: "3000 Ft-tól" },
-        { type: "Hosszú szőrű macska", price: "4000 Ft-tól" },
-        { type: "Rövid szőrű nyulak", price: "2000 Ft-tól" },
-        { type: "Hosszú szőrű nyulak", price: "3000 Ft-tól" },
-        { type: "Rövid szőrű tengerimalacok", price: "2000 Ft-tól" },
-        { type: "Hosszú szőrű tengerimalacok", price: "3000 Ft-tól" }
+        { type: "Rövid szőrű kutya", price: "3.000 Ft-tól" },
+        { type: "Félhosszú szőrű kutya", price: "4.000 Ft-tól" },
+        { type: "Hosszú szőrű kutya", price: "5.000 Ft-tól" },
+        { type: "Rövid szőrű macska", price: "2.000 Ft-tól" },
+        { type: "Félhosszú szőrű macska", price: "3.000 Ft-tól" },
+        { type: "Hosszú szőrű macska", price: "4.000 Ft-tól" },
+        { type: "Rövid szőrű nyulak", price: "2.000 Ft-tól" },
+        { type: "Hosszú szőrű nyulak", price: "3.000 Ft-tól" },
+        { type: "Rövid szőrű tengerimalacok", price: "2.000 Ft-tól" },
+        { type: "Hosszú szőrű tengerimalacok", price: "3.000 Ft-tól" }
       ],
       eu: [
-        { type: "Kutya", price: "5000 Ft" },
-        { type: "Macska", price: "4000 Ft" },
-        { type: "Nyúl", price: "3000 Ft" },
-        { type: "Tengerimalac", price: "3000 Ft" }
+        { type: "Kutya", price: "5.000 Ft" },
+        { type: "Macska", price: "4.000 Ft" },
+        { type: "Nyúl", price: "3.000 Ft" },
+        { type: "Tengerimalac", price: "3.000 Ft" }
       ],
-      kv: [{ type: "Minden állat számára", price: "1000 Ft" }],
+      kv: [{ type: "Minden állat számára", price: "1.000 Ft" }],
       fields: [
         { key: "type", label: "" },
         { key: "price", label: "" }

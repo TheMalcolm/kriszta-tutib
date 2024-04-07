@@ -36,7 +36,9 @@
           /></router-link>
         </b-col>
         <b-col class="bigico mb-5 mb-md-0">
-          <img :src="hotel" alt="Panzio" />
+          <router-link :to="{ name: 'DogBoarding' }"
+            ><img :src="hotel" alt="Panzio"
+          /></router-link>
         </b-col>
       </b-row>
     </b-container>
@@ -138,8 +140,9 @@ export default {
   cursor: pointer;
   color: #ffffff;
   border: 0px;
-  font-size: 17px;
-  padding: 16px 31px;
+  font-size: 1.4rem;
+  width: 15rem;
+
   text-decoration: none;
 }
 .cta-button:hover {

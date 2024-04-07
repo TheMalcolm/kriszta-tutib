@@ -6,6 +6,7 @@ import DogBoardingHouseAppointment from "@/components/DogBoardingHouseAppointmen
 import Dashboard from "@/components/Admin/Dashboard";
 import Login from "@/components/Admin/Login";
 import Cosmetics from "@/components/Cosmetics";
+import DogBoarding from "@/components/DogBoarding";
 
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ export default new Router({
       path: "/kozmetika",
       name: "Cosmetics",
       component: Cosmetics
+    },
+    {
+      path: "/panzio",
+      name: "DogBoarding",
+      component: DogBoarding
     }
   ],
   scrollBehavior(to, from, savedPosition) {

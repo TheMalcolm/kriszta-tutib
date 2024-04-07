@@ -26,9 +26,7 @@
             >
           </b-nav-item>
           <b-nav-item href="#">
-            <router-link
-              class="nav-btn"
-              :to="{ name: 'DogBoardingHouseAppointment' }"
+            <router-link class="nav-btn" :to="{ name: 'DogBoarding' }"
               >Panzió</router-link
             >
           </b-nav-item>

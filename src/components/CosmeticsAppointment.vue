@@ -16,224 +16,250 @@
       <b-row class="all">
         <b-col xs="12">
           <div class="card card-1">
-            <b-form @submit="submitForm">
-              <b-form-group
-                id="namegroup"
-                label="Gazdi teljes neve:"
-                label-for="name"
-                description="Kérlek a teljes neved add meg!"
-                class="labels"
-              >
-                <b-form-input
-                  id="name"
-                  v-model="form.name"
-                  required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                id="emailgroup"
-                label="Gazdi e-mail címe:"
-                label-for="email"
-                description=""
-                class="labels"
-              >
-                <b-form-input
-                  id="email"
-                  type="email"
-                  v-model="form.email"
-                  required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                id="phonegroup"
-                label="Gazdi telefonszáma:"
-                label-for="phone"
-                description=""
-                class="labels"
-              >
-                <b-form-input
-                  id="phone"
-                  v-model="form.phone"
-                  required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                id="petgroup"
-                label="Kisállat neve:"
-                label-for="pet"
-                description=""
-                class="labels"
-              >
-                <b-form-input
-                  id="pet"
-                  v-model="form.pet"
-                  required
-                ></b-form-input>
-              </b-form-group>
-              <b-form-group
-                id="typegroup"
-                label="Kisállat fajtája:"
-                label-for="type"
-                class="labels"
-              >
-                <b-form-select
-                  id="type"
-                  v-model="form.animaltype"
-                  :options="animal"
-                  class="form-control"
-                ></b-form-select>
-              </b-form-group>
-
-              <div v-if="form.animaltype == null">
-                <b-form-group
-                  id="servicegroup"
-                  label="Kívánt szolgáltatás:"
-                  label-for="service0"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="service0"
-                    v-model="form.servicetype"
-                    class="form-control"
+            <ValidationObserver ref="observer" v-slot="{ submitForm }">
+              <b-form @submit.prevent="submitForm(onSubmit)">
+                <ValidationProvider name="name" rules="required" v-slot="{ errors, valid }">
+                  <b-form-group
+                    id="namegroup"
+                    label="Gazdi teljes neve:"
+                    label-for="name"
+                    description="Kérlek a teljes neved add meg!"
+                    class="labels"
                   >
-                    <b-form-select-option value="none" disabled
-                      >Kérlek válassz fajtát!</b-form-select-option
+                    <b-form-input
+                      id="name"
+                      v-model="form.name"
+                      required
+                      :state="errors[0] ? false : (valid ? true : null)"
+                    ></b-form-input>
+                    <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                  </b-form-group>
+                </ValidationProvider>
+
+                <ValidationProvider name="email" rules="required|email" v-slot="{ errors, valid }">
+                  <b-form-group
+                    id="emailgroup"
+                    label="Gazdi e-mail címe:"
+                    label-for="email"
+                    description=""
+                    class="labels"
+                  >
+                    <b-form-input
+                      id="email"
+                      type="email"
+                      v-model="form.email"
+                      required
+                      :state="errors[0] ? false : (valid ? true : null)"
+                    ></b-form-input>
+                    <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                  </b-form-group>
+                </ValidationProvider>
+
+                <ValidationProvider name="phone" rules="required|phone" v-slot="{ errors, valid }">
+                  <b-form-group
+                    id="phonegroup"
+                    label="Gazdi telefonszáma:"
+                    label-for="phone"
+                    description=""
+                    class="labels"
+                  >
+                    <b-form-input
+                      id="phone"
+                      v-model="form.phone"
+                      required
+                      :state="errors[0] ? false : (valid ? true : null)"
+                    ></b-form-input>
+                    <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                  </b-form-group>
+                </ValidationProvider>
+
+                <ValidationProvider name="pet" rules="required" v-slot="{ errors, valid }">
+                  <b-form-group
+                    id="petgroup"
+                    label="Kisállat neve:"
+                    label-for="pet"
+                    description=""
+                    class="labels"
+                  >
+                    <b-form-input
+                      id="pet"
+                      v-model="form.pet"
+                      required
+                      :state="errors[0] ? false : (valid ? true : null)"
+                    ></b-form-input>
+                    <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                  </b-form-group>
+                </ValidationProvider>
+
+                <ValidationProvider name="animaltype" rules="required" v-slot="{ errors, valid }">
+                  <b-form-group
+                    id="typegroup"
+                    label="Kisállat fajtája:"
+                    label-for="type"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="type"
+                      v-model="form.animaltype"
+                      :options="animal"
+                      class="form-control"
+                      :state="errors[0] ? false : (valid ? true : null)"
+                    ></b-form-select>
+                    <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
+                  </b-form-group>
+                </ValidationProvider>
+
+                <div v-if="form.animaltype == null">
+                  <b-form-group
+                    id="servicegroup"
+                    label="Kívánt szolgáltatás:"
+                    label-for="service0"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="service0"
+                      v-model="form.servicetype"
+                      class="form-control"
                     >
-                  </b-form-select>
-                </b-form-group>
-              </div>
+                      <b-form-select-option value="none" disabled
+                        >Kérlek válassz fajtát!</b-form-select-option
+                      >
+                    </b-form-select>
+                  </b-form-group>
+                </div>
 
-              <div v-else-if="form.animaltype == 'a1'">
-                <b-form-group
-                  id="servicegroup"
-                  label="Kívánt szolgáltatás:"
-                  label-for="service1"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="service1"
-                    v-model="form.servicetype"
-                    class="form-control"
-                    :options="services"
-                  />
-                </b-form-group>
-                <b-form-group
-                  id="lengthgroup"
-                  label="Szőr hosszúság:"
-                  label-for="length"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="length"
-                    v-model="form.length"
-                    class="form-control"
-                    :options="furLengths"
-                  />
-                </b-form-group>
-                <b-form-group
-                  id="dogsizegroup"
-                  label="Kutya mérete:"
-                  label-for="dogsize"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="dogsize"
-                    v-model="form.dogsize"
-                    class="form-control"
-                    :options="dogSizes"
-                  />
-                </b-form-group>
-              </div>
+                <div v-else-if="form.animaltype == 'a1'">
+                  <b-form-group
+                    id="servicegroup"
+                    label="Kívánt szolgáltatás:"
+                    label-for="service1"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="service1"
+                      v-model="form.servicetype"
+                      class="form-control"
+                      :options="services"
+                    />
+                  </b-form-group>
+                  <b-form-group
+                    id="lengthgroup"
+                    label="Szőr hosszúság:"
+                    label-for="length"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="length"
+                      v-model="form.length"
+                      class="form-control"
+                      :options="furLengths"
+                    />
+                  </b-form-group>
+                  <b-form-group
+                    id="dogsizegroup"
+                    label="Kutya mérete:"
+                    label-for="dogsize"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="dogsize"
+                      v-model="form.dogsize"
+                      class="form-control"
+                      :options="dogSizes"
+                    />
+                  </b-form-group>
+                </div>
 
-              <div v-else-if="form.animaltype == 'a2'">
-                <b-form-group
-                  id="servicegroup"
-                  label="Kívánt szolgáltatás:"
-                  label-for="service1"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="service1"
-                    v-model="form.servicetype"
-                    class="form-control"
-                    :options="services"
-                  />
-                </b-form-group>
-                <b-form-group
-                  id="lengthgroup"
-                  label="Szőr hosszúság:"
-                  label-for="length"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="length"
-                    v-model="form.length"
-                    class="form-control"
-                    :options="furLengths"
-                  />
-                </b-form-group>
+                <div v-else-if="form.animaltype == 'a2'">
+                  <b-form-group
+                    id="servicegroup"
+                    label="Kívánt szolgáltatás:"
+                    label-for="service1"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="service1"
+                      v-model="form.servicetype"
+                      class="form-control"
+                      :options="services"
+                    />
+                  </b-form-group>
+                  <b-form-group
+                    id="lengthgroup"
+                    label="Szőr hosszúság:"
+                    label-for="length"
+                    class="labels"
+                  >
+                    <b-form-select
+                      id="length"
+                      v-model="form.length"
+                      class="form-control"
+                      :options="furLengths"
+                    />
+                  </b-form-group>
 
-                <b-form-group
-                  id="dogsizegroup"
-                  label="Macska mérete:"
-                  label-for="dogsize"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="dogsize"
-                    v-model="form.dogsize"
-                    class="form-control"
-                    :options="size"
-                  />
-                </b-form-group>
-              </div>
-              <div v-else>
-                <b-form-group
-                  id="servicegroup"
-                  label="Kívánt szolgáltatás:"
-                  label-for="service1"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="service1"
-                    v-model="form.servicetype"
-                    class="form-control"
-                    :options="servicessmall"
+                  <b-form-group
+                    id="dogsizegroup"
+                    label="Macska mérete:"
+                    label-for="dogsize"
+                    class="labels"
                   >
-                  </b-form-select>
-                </b-form-group>
-                <b-form-group
-                  id="lengthgroup"
-                  label="Szőr hosszúság:"
-                  label-for="length"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="length"
-                    v-model="form.length"
-                    class="form-control"
-                    :options="fursmall"
+                    <b-form-select
+                      id="dogsize"
+                      v-model="form.dogsize"
+                      class="form-control"
+                      :options="size"
+                    />
+                  </b-form-group>
+                </div>
+                <div v-else>
+                  <b-form-group
+                    id="servicegroup"
+                    label="Kívánt szolgáltatás:"
+                    label-for="service1"
+                    class="labels"
                   >
-                  </b-form-select>
-                </b-form-group>
-                <b-form-group
-                  id="dogsizegroup"
-                  label="Kisállat mérete:"
-                  label-for="dogsize"
-                  class="labels"
-                >
-                  <b-form-select
-                    id="dogsize"
-                    v-model="form.dogsize"
-                    class="form-control"
+                    <b-form-select
+                      id="service1"
+                      v-model="form.servicetype"
+                      class="form-control"
+                      :options="servicessmall"
+                    >
+                    </b-form-select>
+                  </b-form-group>
+                  <b-form-group
+                    id="lengthgroup"
+                    label="Szőr hosszúság:"
+                    label-for="length"
+                    class="labels"
                   >
-                    <b-form-select-option value="o"
-                      >Nem releváns</b-form-select-option
-                    ></b-form-select
+                    <b-form-select
+                      id="length"
+                      v-model="form.length"
+                      class="form-control"
+                      :options="fursmall"
+                    >
+                    </b-form-select>
+                  </b-form-group>
+                  <b-form-group
+                    id="dogsizegroup"
+                    label="Kisállat mérete:"
+                    label-for="dogsize"
+                    class="labels"
                   >
-                </b-form-group>
-              </div>
-            </b-form>
+                    <b-form-select
+                      id="dogsize"
+                      v-model="form.dogsize"
+                      class="form-control"
+                    >
+                      <b-form-select-option value="o"
+                        >Nem releváns</b-form-select-option
+                      ></b-form-select
+                    >
+                  </b-form-group>
+                </div>
+              </b-form>
+            </ValidationObserver>
 
             <b-card
               style="color: #5c002e;"

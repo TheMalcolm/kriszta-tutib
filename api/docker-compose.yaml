@@ -1,0 +1,69 @@
+version: "1"
+services:
+    #PHP Service
+    tutib_app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: tutib/php
+        mem_limit: 1024m
+        mem_reservation: 32M
+        cpus: 1
+        container_name: tutib-php
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www:cached
+            - ./vendor:/var/www/vendor:delegated
+            - ./environment/php/dev_local.ini:/usr/local/etc/php/conf.d/local.ini:cached
+            - ./environment/php-fpm/local.conf:/usr/local/etc/php-fpm.d/local.conf:cached
+        networks:
+            - tutib-network
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    #Nginx Service
+    tutib-webserver:
+        image: nginx:alpine
+        container_name: tutib-nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "81:80"
+        volumes:
+            - ./:/var/www
+            - ./environment/nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - tutib-network
+
+    #MySQL Service
+    db:
+        image: mysql:5.7.22
+        container_name: tutib-db
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: tutib
+            MYSQL_ROOT_PASSWORD: secret
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - tutib-db-data:/var/lib/mysql/
+            - ./environment/mysql/my.cnf:/etc/mysql/my.cnf
+        networks:
+            - tutib-network
+
+#Docker Networks
+networks:
+    tutib-network:
+        driver: bridge
+#Volumes
+volumes:
+    tutib-db-data:
+        driver: local

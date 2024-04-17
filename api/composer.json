@@ -6,7 +6,10 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
-        "laravel/lumen-framework": "^8.3.1"
+        "fruitcake/laravel-cors": "^2.2",
+        "laravel/lumen-framework": "^8.3.1",
+        "pearl/lumen-request-validate": "^1.8",
+        "thedevsaddam/lumen-route-list": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

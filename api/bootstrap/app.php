@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CorsMiddleware;
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
@@ -23,9 +25,8 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
-
-// $app->withEloquent();
+$app->withFacades();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,9 +79,12 @@ $app->configure('app');
 // ]);
 
 // $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
-
+    //     'auth' => App\Http\Middleware\Authenticate::class,
+    // ]);
+    
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
@@ -94,6 +99,9 @@ $app->configure('app');
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+$app->register(\Thedevsaddam\LumenRouteList\LumenRouteListServiceProvider::class);
+$app->register(Pearl\RequestValidate\RequestServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -111,5 +119,7 @@ $app->router->group([
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
+
+app('translator')->setLocale('hu');
 
 return $app;

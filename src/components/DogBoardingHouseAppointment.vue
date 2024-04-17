@@ -322,7 +322,7 @@
                   adatvédelmi nyilatkozatban foglaltakat.
                 </b-form-checkbox>
 
-                <button class="btn btn-save mt-4">Időpont lefoglalása</button>
+                <button class="btn btn-save mt-4" v-on:click="submitForm">Időpont lefoglalása</button>
               </div>
               <div v-else class="text-center py-5">
                 <b-icon-calendar-check
@@ -444,6 +444,82 @@ export default {
       this.underEditing = null;
       this.calculateTotal();
       this.$refs["dogFormModal"].hide();
+    },
+
+    async submitForm (e) {
+      e.preventDefault()
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Accept', 'application/json')
+
+      const raw = JSON.stringify({...this.form, entries: this.entries, total: this.summary.total});
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      const response = await fetch("http://localhost:81/pet-hotel-reservation", requestOptions)
+
+      if(response.ok) {
+        const jsonData = await response.json(); 
+        this.$swal({
+          icon: 'success',
+          title: 'Sikeres időpontfoglalás!',
+          text: 'Szeretettel várunk a kiválasztott időpontban!',
+        })
+
+        this.form = {
+            interval: null,
+            petCount: null,
+            petDetails: {
+              name: null,
+              type: null,
+              extraFeatures: {
+                cosmetics: false,
+                extraLongWalking: false,
+                physiotherapy: false
+              },
+              comments: null
+            },
+            ownerDetails: {
+              name: null,
+              email: null,
+              phone: null
+            },
+            gdprAccepted: "not_accepted"
+          }
+
+          this.entries = []
+          this.summary = {
+            days: null,
+            cosmeticsCount: 0,
+            extraLongWalkingCount: 0,
+            physiotherapyCount: 0,
+            total: 0.0
+          }
+          this.petCount = 0;
+      } else {
+        if(response.status == 422) {
+
+          let validationErrors = await response.json();
+          let html = ``;
+
+          for(const [key, value] of Object.entries(validationErrors)) {
+            html += `<li>${value[0]}</li>`;
+          }
+
+          this.$swal({
+            icon: 'error',
+            title: 'Hibás adatok!',
+            html: html,
+            footer: 'Kérlek ellenőrizd az alábbi hibákat beküldés előtt!' 
+          })
+        }
+      }
     },
 
     editDoggo(index) {

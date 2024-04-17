@@ -9,6 +9,9 @@ import DatePicker from 'vue2-datepicker';
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import './validation'
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 Vue.config.productionTip = false
 
 // Make BootstrapVue available throughout your project
@@ -16,6 +19,7 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(DatePicker)
+Vue.use(VueSweetalert2);
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 

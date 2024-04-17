@@ -1,0 +1,169 @@
+<template>
+    <div>
+        <h3 style="color: #5c002e; margin-bottom: 0px;">Kozmetika</h3>
+        <b-form-group label="" label-for="filter-input" label-cols-sm="3" label-align-sm="right" label-size="sm"
+            class="mb-3 col-10 col-sm-8">
+            <b-input-group size="sm">
+                <b-form-input id="filter-input" v-model="filter" type="text" placeholder="Keresés..."
+                    style="margin-right: 8px;"></b-form-input>
+
+                <b-input-group-append>
+                    <b-button size="sm" :disabled="!filter" @click="filter = ''"><b-icon-x-square /></b-button>
+                </b-input-group-append>
+            </b-input-group>
+        </b-form-group>
+
+        <b-tabs content-class="mt-3" v-if="cosmeticsAppointments">
+            <b-tab :title="date" v-for="(items, date) in cosmeticsAppointments.data" :key="date">
+                <b-table id="cosmetic" hover small sticky-header :filter="filter" :fields="fields" :items="items">
+                    <template #head(date)="data">
+                        <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(petname)="data">
+                        <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(service)="data">
+                        <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(name)="data">
+                        <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #head(pettype)="data">
+                        <span class="table-head">{{ data.label }}</span>
+                    </template>
+                    <template #cell(date)="row">
+                        <span class="rowdata">{{ row.item.date }}</span>
+                    </template>
+                    <template #cell(time)="row">
+                        <span class="rowdata">{{ row.item.time }}</span>
+                    </template>
+
+                    <template #cell(petname)="row">
+                        <span class="rowdata">{{ row.item.petname }}</span>
+                    </template>
+                    <template #cell(pettype)="row">
+                        <span class="rowdata">{{
+                            formatAnimal(row.item.pettype)
+                            }}</span>
+                    </template>
+                    <template #cell(service)="row">
+                        <span class="rowdata">{{
+                            formatService(row.item.service)
+                            }}</span>
+                    </template>
+                    <template #cell(actions)="row" class="d-block">
+                        <b-button size="sm" @click="openModal(row.item)" class="mr-1 btn-info">
+                            <b-icon-info-circle />
+                        </b-button>
+
+                        <b-button size="sm" @click="showMsgBox"><b-icon-trash /></b-button>
+                    </template>
+                </b-table>
+            </b-tab>
+        </b-tabs>
+
+        <b-modal v-if="selectedItem" v-model="showModalInfo">
+            <template #modal-header>
+                <p style="color: #5c002e; font-size: larger;">
+                {{ selectedItem.appointment_date }}
+                </p>
+            </template>
+            <template #modal-footer="{close}">
+                <b-button size="sm" @click="cancel()">Bezárás</b-button>
+            </template>
+
+            <h3 class="datatitle">Gazdi adatai:</h3>
+            <p class="datasmall"><strong>Név: </strong>{{ selectedItem.owner_name }}</p>
+            <p class="datasmall">
+                <strong>E-mail:</strong> {{ selectedItem.email }}
+            </p>
+            <p class="datasmall">
+                <strong>Telefonszám:</strong> {{ selectedItem.phone }}
+            </p>
+            <h3 class="datatitle">Kisállat adatai:</h3>
+            <p class="datasmall">
+                <strong>Kisállat neve:</strong> {{ selectedItem.pet_name }}
+            </p>
+            <p class="datasmall">
+                <strong>Fajta: </strong>{{ formatAnimal(selectedItem.pet_type) }}
+            </p>
+            <p class="datasmall">
+                <strong>Szolgáltatás: </strong
+                >{{ formatService(selectedItem.treatment_type) }}
+            </p>
+            <p class="datasmall">
+                <strong>Szőr hosszúsága: </strong>{{ formatFur(selectedItem.fur) }}
+            </p>
+            <p class="datasmall">
+                <strong>Kisállat mérete:</strong> {{ formatSize(selectedItem.size) }}
+            </p>
+        </b-modal>
+    </div>
+</template>
+
+<script>
+import { serviceCodes, animalCodes, furCodes, sizeCodes } from '../../../data'
+export default {
+    data () {
+        return {
+            cosmeticsAppointments: null,
+            filter: null,
+            fields: [
+                { key: 'appointment_time', label: 'Lefoglalt időpont' },
+                { key: 'owner_name', label: 'Gazdi neve' },
+                { key: 'pet_name', label: 'Kisállat neve' },
+                { key: 'pet_type', label: 'Kisállat fajtája' },
+                { key: 'treatment_type', label: 'Szolgáltatás', formatter: (v) => this.formatService(v) },
+                { key: 'actions', label: '' },
+            ],
+            serviceCodes: serviceCodes,
+            animalCodes: animalCodes,
+            furCodes: furCodes,
+            sizeCodes: sizeCodes,
+            selectedItem: null,
+            showModalInfo: false,
+        }
+    },
+    methods: {
+        async loadCosmeticsAppointments() {
+            const response = await fetch('http://localhost:81/cosmetics-appointment', {headers: {'Accept': 'application/json'}})
+            this.cosmeticsAppointments = await response.json()
+        },
+
+        openModal(item) {
+            this.selectedItem = item
+            this.showModalInfo = true
+            console.log(item)
+        },
+
+        cancel() {
+            this.selectedItem = null
+            this.showModalInfo = false
+        },
+
+        showMsgBox() {
+
+        },
+
+        formatService(code) {
+            return this.serviceCodes[code] || code;
+        },
+
+        formatFur(code) {
+            return this.furCodes[code] || code;
+        },
+
+        formatSize(code) {
+            return this.sizeCodes[code] || code;
+        },
+
+        formatAnimal(code) {
+            return this.animalCodes[code] || code;
+        },
+    },
+
+    mounted() {
+        this.loadCosmeticsAppointments()
+    }
+}
+</script>

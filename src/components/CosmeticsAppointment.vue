@@ -414,7 +414,6 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import _ from "lodash";
 import Footer from "../components/Shared/Footer.vue";
-
 import Bar from "../components/Shared/Bar.vue";
 
 export default {
@@ -619,9 +618,63 @@ export default {
         date > new Date(today.getTime() + 30 * 24 * 3600 * 1000)
       );
     },
-    submitForm(e) {
+    async submitForm(e) {
       e.preventDefault();
-      console.log(this.form);
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Accept', 'application/json')
+
+      const raw = JSON.stringify(this.form);
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      const response = await fetch("http://localhost:81/cosmetics-appointment", requestOptions)
+
+      if(response.ok) {
+        const jsonData = await response.json(); 
+        this.$swal({
+          icon: 'success',
+          title: 'Sikeres időpontfoglalás!',
+          text: 'Szeretettel várunk a kiválasztott időpontban!',
+        })
+
+        this.form = {
+          name: null,
+          email: null,
+          phone: null,
+          pet: null,
+          servicetype: null,
+          animaltype: null,
+          dogsize: null,
+          length: null,
+          selectedDate: null,
+          selectedTime: null,
+          gdprAccepted: "not_accepted"
+        }
+      } else {
+        if(response.status == 422) {
+
+          let validationErrors = await response.json();
+          let html = ``;
+          
+          for(const [key, value] of Object.entries(validationErrors)) {
+            html += `<li>${value[0]}</li>`;
+          }
+
+          this.$swal({
+            icon: 'error',
+            title: 'Hibás adatok!',
+            html: html,
+            footer: 'Kérlek ellenőrizd az alábbi hibákat beküldés előtt!' 
+          })
+        }
+      } 
     }
   },
 

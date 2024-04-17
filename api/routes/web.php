@@ -13,6 +13,16 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+$router->get('/hello-world', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group(['prefix' => 'cosmetics-appointment'], function() use ($router) {
+    $router->get('', ['uses' => 'CosmeticsAppointmentController@list']);
+    $router->post('', ['uses' => 'CosmeticsAppointmentController@store']);
+});
+
+$router->group(['prefix' => 'pet-hotel-reservation'], function() use ($router) {
+    $router->get('', ['uses' => 'PetHotelReservationController@list']);
+    $router->post('', ['uses' => 'PetHotelReservationController@store']);
 });

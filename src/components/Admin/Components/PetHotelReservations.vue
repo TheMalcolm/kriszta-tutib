@@ -38,7 +38,7 @@
                 <b-icon-info-circle />
             </b-button>
     
-            <b-button size="sm" @click="showMsgBox"><b-icon-trash /></b-button>
+            <b-button size="sm" @click="deleteConfirm(row.item)"><b-icon-trash /></b-button>
             </template>
         </b-table>
     
@@ -157,7 +157,37 @@ export default {
             const response = await fetch('http://localhost:81/pet-hotel-reservation?page=' + this.currentPage, {headers: {'Accept': 'application/json'}})
             this.hotelReservations = await response.json()
             this.currentPage = this.hotelReservations.meta.current_page
-        }
+        },
+
+        deleteConfirm(item) {
+            this.$bvModal
+                .msgBoxConfirm("Biztosan törölni szeretnéd ezt a foglalást?", {
+                    title: "Foglalás törlése",
+                    size: "sm",
+                    buttonSize: "sm",
+                    okVariant: "danger",
+                    okTitle: "Igen",
+                    cancelTitle: "Nem",
+                    footerClass: "p-2",
+                    hideHeaderClose: true,
+                    centered: true
+                })
+                .then(value => {
+                    console.log(value, item)
+
+                    if(value === true) {
+                        fetch('http://localhost:81/pet-hotel-reservation/' + item.id, {
+                            method: 'DELETE'
+                        }).then( response => {
+                            this.loadHotelReservations()
+                            this.$swal({icon: 'success', text: 'Sikeres törlés!'});
+                        })
+                    }
+                })
+                .catch(err => {
+                // An error occurred
+                });
+        },
     },
 
     mounted() {

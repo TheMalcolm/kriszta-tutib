@@ -20,9 +20,11 @@ $router->get('/hello-world', function () use ($router) {
 $router->group(['prefix' => 'cosmetics-appointment'], function() use ($router) {
     $router->get('', ['uses' => 'CosmeticsAppointmentController@list']);
     $router->post('', ['uses' => 'CosmeticsAppointmentController@store']);
+    $router->delete('{cosmeticsAppointmentId}', ['uses' => 'CosmeticsAppointmentController@destroy']);
 });
 
 $router->group(['prefix' => 'pet-hotel-reservation'], function() use ($router) {
     $router->get('', ['uses' => 'PetHotelReservationController@list']);
     $router->post('', ['uses' => 'PetHotelReservationController@store']);
+    $router->delete('{petHotelReservationId}', ['uses' => 'PetHotelReservationController@destroy']);
 });

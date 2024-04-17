@@ -72,9 +72,10 @@ export default {
     submitForm(e) {
       e.preventDefault();
       if (this.form.username === "admin" && this.form.password === "admin") {
+        localStorage.setItem('auth', true)
         this.$router.push("/admin/foglalasok");
       } else {
-        alert("Hibás felhasználónév vagy jelszó!");
+        this.$swal({icon: 'error', text: "Hibás felhasználónév vagy jelszó!"});
       }
     }
   }

@@ -54,4 +54,15 @@ class CosmeticsAppointmentController extends Controller
 
         return new JsonResource($payload);
     }
+
+    /**
+     * @param CosmeticsAppointment $cosmeticsAppointment
+     * 
+     * @return void
+     */
+    public function destroy(string $cosmeticsAppointmentId): void
+    {
+        $cosmeticsAppointment = CosmeticsAppointment::findOrFail($cosmeticsAppointmentId);
+        $cosmeticsAppointment->delete();
+    }
 }

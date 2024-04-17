@@ -38,6 +38,17 @@ class PetHotelReservationController extends Controller
      */
     public function list(Request $request): PetHotelReservationResourceCollection
     {
-        return new PetHotelReservationResourceCollection(PetHotelReservation::orderBy('id', 'desc')->paginate(2));
+        return new PetHotelReservationResourceCollection(PetHotelReservation::orderBy('id', 'desc')->paginate(4));
+    }
+
+    /**
+     * @param PetHotelReservation $petHotelReservation
+     * 
+     * @return void
+     */
+    public function destroy(string $petHotelReservationId): void
+    {
+        $petHotelReservation = PetHotelReservation::findOrFail($petHotelReservationId);
+        $petHotelReservation->delete();
     }
 }

@@ -9,6 +9,7 @@
         Kutya hozzáadása
       </template>
       <div>
+        <b-alert show variant="danger" v-if="modalFormError">Kérlek add meg a kutyus nevét és fajtáját!</b-alert>
         <b-form-group
           id="petNameGroup"
           label="Kutyus neve:"
@@ -380,6 +381,7 @@ export default {
         },
         gdprAccepted: "not_accepted"
       },
+      modalFormError: false,
       underEditing: null,
       entries: [],
 
@@ -424,26 +426,36 @@ export default {
     },
 
     submitModalForm() {
-      if (this.underEditing !== null) {
-        this.entries[this.underEditing] = this.form.petDetails;
+
+      const { name, type } = this.form.petDetails
+
+      if(name == '' || type == '' || name == null || type == null) {
+        this.modalFormError = true
       } else {
-        this.entries.push(this.form.petDetails);
-        this.form.petCount++;
+        this.modalFormError = false
+        if (this.underEditing !== null) {
+          this.entries[this.underEditing] = this.form.petDetails;
+        } else {
+          this.entries.push(this.form.petDetails);
+          this.form.petCount++;
+        }
+  
+        this.form.petDetails = {
+          name: null,
+          type: null,
+          comments: null,
+          extraFeatures: {
+            cosmetics: false,
+            extraLongWalking: false,
+            physiotherapy: false
+          }
+        };
+        this.underEditing = null;
+        this.calculateTotal();
+        this.$refs["dogFormModal"].hide();
       }
 
-      this.form.petDetails = {
-        name: null,
-        type: null,
-        comments: null,
-        extraFeatures: {
-          cosmetics: false,
-          extraLongWalking: false,
-          physiotherapy: false
-        }
-      };
-      this.underEditing = null;
-      this.calculateTotal();
-      this.$refs["dogFormModal"].hide();
+
     },
 
     async submitForm (e) {

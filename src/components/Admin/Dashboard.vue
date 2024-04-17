@@ -16,9 +16,8 @@
             <b-navbar-nav pills class="ml-auto " style="color: #5c002e;">
               <!-- Using 'button-content' slot -->
               <b-nav-item href="#">
-                <router-link class="nav-btn" :to="{ name: 'HomePage' }"
-                  >Kijelentkezés</router-link
-                >
+                <a class="nav-btn" @click="logout"
+                  >Kijelentkezés</a>
               </b-nav-item>
             </b-navbar-nav>
           </b-collapse>
@@ -80,37 +79,11 @@ export default {
         return ["text-dark"];
       }
     },
-    showMsgBoxTwo() {
-      this.boxTwo = "";
-      this.$bvModal
-        .msgBoxConfirm("Biztosan törölni szeretnéd ezt a foglalást?", {
-          title: "Foglalás törlése",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          okTitle: "Igen",
-          cancelTitle: "Nem",
-          footerClass: "p-2",
-          hideHeaderClose: true,
-          centered: true
-        })
-        .then(value => {
-          this.boxTwo = value;
-        })
-        .catch(err => {
-          // An error occurred
-        });
-    },
-    sortObject(obj) {
-      return Object.keys(obj)
-        .sort()
-        .reduce(function(result, key) {
-          result[key] = obj[key];
-          return result;
-        }, {});
-    },
 
-    
+    logout() {
+      localStorage.removeItem('auth')
+      this.$router.push("/admin");
+    }
   },
   computed: {
     filteredKozm() {
@@ -140,6 +113,15 @@ export default {
       );
     }
   },
+
+  mounted() {
+
+    if(localStorage.getItem('auth') == null) {
+      this.$router.push("/admin");
+    }
+
+    console.log()
+  }
 };
 </script>
 

@@ -45,8 +45,8 @@
                             <b-icon-info-circle />
                         </b-button>
 
-                        <b-button size="sm" @click="showMsgBox"><b-icon-trash /></b-button>
-                    </template>
+                        <b-button size="sm" @click="deleteConfirm(row.item)"><b-icon-trash /></b-button>
+                    </template> 
                 </b-table>
             </b-tab>
         </b-tabs>
@@ -130,8 +130,33 @@ export default {
             this.showModalInfo = false
         },
 
-        showMsgBox() {
+        deleteConfirm(item) {
+            this.$bvModal
+                .msgBoxConfirm("Biztosan törölni szeretnéd ezt a foglalást?", {
+                    title: "Foglalás törlése",
+                    size: "sm",
+                    buttonSize: "sm",
+                    okVariant: "danger",
+                    okTitle: "Igen",
+                    cancelTitle: "Nem",
+                    footerClass: "p-2",
+                    hideHeaderClose: true,
+                    centered: true
+                })
+                .then(value => {
+                    console.log(value, item)
 
+                    if(value === true) {
+                        fetch('http://localhost:81/cosmetics-appointment/' + item.id, {
+                            method: 'DELETE'
+                        }).then( response => {
+                            this.loadCosmeticsAppointments()
+                        })
+                    }
+                })
+                .catch(err => {
+                // An error occurred
+                });
         },
 
         formatService(code) {

@@ -4,7 +4,7 @@
       <Bar />
     </header>
 
-    <b-modal ref="dogFormModal" id="dogFormModal" title="dogFormModal">
+    <b-modal ref="dogFormModal" id="dogFormModal" title="dogFormModal" hide-footer>
       <template #modal-title>
         Kutya hozzáadása
       </template>

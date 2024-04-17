@@ -1,30 +1,7 @@
 <template>
     <div>
         <h3 style="color: #5c002e;">Panzió</h3>
-        <b-form-group
-            label=""
-            label-for="filter-input"
-            label-cols-sm="3"
-            label-align-sm="right"
-            label-size="sm"
-            class="mb-3 col-10 col-sm-8"
-        >
-            <b-input-group size="sm">
-            <b-form-input
-                id="filter-input"
-                v-model="filter"
-                type="text"
-                placeholder="Keresés..."
-                style="margin-right: 8px;"
-            ></b-form-input>
-    
-            <b-input-group-append>
-                <b-button size="sm" :disabled="!filter" @click="filter = ''"
-                ><b-icon-x-square
-                /></b-button>
-            </b-input-group-append>
-            </b-input-group>
-        </b-form-group>
+        
         <b-table
             v-if="hotelReservations"
             id="boarding"

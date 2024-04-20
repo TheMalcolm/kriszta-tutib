@@ -4,12 +4,19 @@
       <Bar />
     </header>
 
-    <b-modal ref="dogFormModal" id="dogFormModal" title="dogFormModal" hide-footer>
+    <b-modal
+      ref="dogFormModal"
+      id="dogFormModal"
+      title="dogFormModal"
+      hide-footer
+    >
       <template #modal-title>
         Kutya hozzáadása
       </template>
       <div>
-        <b-alert show variant="danger" v-if="modalFormError">Kérlek add meg a kutyus nevét és fajtáját!</b-alert>
+        <b-alert show variant="danger" v-if="modalFormError"
+          >Kérlek add meg a kutyus nevét és fajtáját!</b-alert
+        >
         <b-form-group
           id="petNameGroup"
           label="Kutyus neve:"
@@ -130,68 +137,100 @@
         <div class="col-lg-9 col-12">
           <b-card class="mb-5">
             <b-card-body style="text-align: left">
-              <div class="row">
-                <div class="col-lg-3 col-12">
-                  <b-form-group
-                    id="namegroup"
-                    label="Gazdi teljes neve:"
-                    label-for="name"
-                    class="labels"
-                  >
-                    <b-form-input
-                      id="name"
-                      v-model="form.ownerDetails.name"
-                      required
-                    ></b-form-input>
-                  </b-form-group>
+              <p>A csillaggal jelölt mezők kitöltés kötelező!</p>
+              <ValidationObserver ref="observer" v-slot="{ submitForm }">
+                <div class="row">
+                  <div class="col-lg-3 col-12">
+                    <ValidationProvider
+                      name="name"
+                      rules="required"
+                      v-slot="{ errors, valid }"
+                    >
+                      <b-form-group
+                        id="namegroup"
+                        label="*Gazdi teljes neve:"
+                        label-for="name"
+                        class="labels"
+                      >
+                        <b-form-input
+                          id="name"
+                          v-model="form.ownerDetails.name"
+                          :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback>{{
+                          errors[0]
+                        }}</b-form-invalid-feedback>
+                      </b-form-group>
+                    </ValidationProvider>
+                  </div>
+                  <div class="col-lg-3 col-12">
+                    <ValidationProvider
+                      name="email"
+                      rules="required|email"
+                      v-slot="{ errors, valid }"
+                    >
+                      <b-form-group
+                        id="emailgroup"
+                        label="*Gazdi e-mail címe:"
+                        label-for="email"
+                        class="labels"
+                      >
+                        <b-form-input
+                          id="email"
+                          v-model="form.ownerDetails.email"
+                          required
+                          :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback>{{
+                          errors[0]
+                        }}</b-form-invalid-feedback>
+                      </b-form-group>
+                    </ValidationProvider>
+                  </div>
+                  <div class="col-lg-3 col-12">
+                    <ValidationProvider
+                      name="phone"
+                      rules="required|phone"
+                      v-slot="{ errors, valid }"
+                    >
+                      <b-form-group
+                        id="phonegroup"
+                        label="*Gazdi telefonszáma:"
+                        label-for="phone"
+                        class="labels"
+                      >
+                        <b-form-input
+                          id="phone"
+                          v-model="form.ownerDetails.phone"
+                          required
+                          :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback>{{
+                          errors[0]
+                        }}</b-form-invalid-feedback>
+                      </b-form-group>
+                    </ValidationProvider>
+                  </div>
+                  <div class="col-lg-3 col-12">
+                    <b-form-group
+                      id="intervalGroup"
+                      label="*Tartózkodás ideje:"
+                      label-for="interval"
+                      class="labels"
+                    >
+                      <date-picker
+                        v-model="form.interval"
+                        type="date"
+                        range
+                        placeholder="Kérlek add meg a tartózkodás idejét!"
+                        :disabled-date="disabledDates"
+                        @change="calculateTotal"
+                        :clearable="false"
+                      ></date-picker>
+                    </b-form-group>
+                  </div>
                 </div>
-                <div class="col-lg-3 col-12">
-                  <b-form-group
-                    id="emailgroup"
-                    label="Gazdi e-mail címe:"
-                    label-for="email"
-                    class="labels"
-                  >
-                    <b-form-input
-                      id="email"
-                      v-model="form.ownerDetails.email"
-                      required
-                    ></b-form-input>
-                  </b-form-group>
-                </div>
-                <div class="col-lg-3 col-12">
-                  <b-form-group
-                    id="phonegroup"
-                    label="Gazdi telefonszáma:"
-                    label-for="phone"
-                    class="labels"
-                  >
-                    <b-form-input
-                      id="phone"
-                      v-model="form.ownerDetails.phone"
-                      required
-                    ></b-form-input>
-                  </b-form-group>
-                </div>
-                <div class="col-lg-3 col-12">
-                  <b-form-group
-                    id="intervalGroup"
-                    label="Tartózkodás ideje:"
-                    label-for="interval"
-                    class="labels"
-                  >
-                    <date-picker
-                      v-model="form.interval"
-                      type="date"
-                      range
-                      placeholder="Kérlek add meg a tartózkodás idejét!"
-                      :disabled-date="disabledDates"
-                      @change="calculateTotal"
-                      :clearable="false"
-                    ></date-picker>
-                  </b-form-group>
-                </div>
-              </div>
+              </ValidationObserver>
 
               <b-button class="addNewPetButton" @click="showModal"
                 ><b-icon-plus /> Kutya hozzáadása</b-button
@@ -323,7 +362,9 @@
                   adatvédelmi nyilatkozatban foglaltakat.
                 </b-form-checkbox>
 
-                <button class="btn btn-save mt-4" v-on:click="submitForm">Időpont lefoglalása</button>
+                <button class="btn btn-save mt-4" v-on:click="submitForm">
+                  Időpont lefoglalása
+                </button>
               </div>
               <div v-else class="text-center py-5">
                 <b-icon-calendar-check
@@ -426,20 +467,19 @@ export default {
     },
 
     submitModalForm() {
+      const { name, type } = this.form.petDetails;
 
-      const { name, type } = this.form.petDetails
-
-      if(name == '' || type == '' || name == null || type == null) {
-        this.modalFormError = true
+      if (name == "" || type == "" || name == null || type == null) {
+        this.modalFormError = true;
       } else {
-        this.modalFormError = false
+        this.modalFormError = false;
         if (this.underEditing !== null) {
           this.entries[this.underEditing] = this.form.petDetails;
         } else {
           this.entries.push(this.form.petDetails);
           this.form.petCount++;
         }
-  
+
         this.form.petDetails = {
           name: null,
           type: null,
@@ -454,18 +494,20 @@ export default {
         this.calculateTotal();
         this.$refs["dogFormModal"].hide();
       }
-
-
     },
 
-    async submitForm (e) {
-      e.preventDefault()
+    async submitForm(e) {
+      e.preventDefault();
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append('Accept', 'application/json')
+      myHeaders.append("Accept", "application/json");
 
-      const raw = JSON.stringify({...this.form, entries: this.entries, total: this.summary.total});
+      const raw = JSON.stringify({
+        ...this.form,
+        entries: this.entries,
+        total: this.summary.total
+      });
 
       const requestOptions = {
         method: "POST",
@@ -474,62 +516,64 @@ export default {
         redirect: "follow"
       };
 
-      const response = await fetch("http://localhost:81/pet-hotel-reservation", requestOptions)
+      const response = await fetch(
+        "http://localhost:81/pet-hotel-reservation",
+        requestOptions
+      );
 
-      if(response.ok) {
-        const jsonData = await response.json(); 
+      if (response.ok) {
+        const jsonData = await response.json();
         this.$swal({
-          icon: 'success',
-          title: 'Sikeres időpontfoglalás!',
-          text: 'Szeretettel várunk a kiválasztott időpontban!',
-        })
+          icon: "success",
+          title: "Sikeres időpontfoglalás!",
+          text: "Szeretettel várunk a kiválasztott időpontban!"
+        });
 
         this.form = {
-            interval: null,
-            petCount: null,
-            petDetails: {
-              name: null,
-              type: null,
-              extraFeatures: {
-                cosmetics: false,
-                extraLongWalking: false,
-                physiotherapy: false
-              },
-              comments: null
+          interval: null,
+          petCount: null,
+          petDetails: {
+            name: null,
+            type: null,
+            extraFeatures: {
+              cosmetics: false,
+              extraLongWalking: false,
+              physiotherapy: false
             },
-            ownerDetails: {
-              name: null,
-              email: null,
-              phone: null
-            },
-            gdprAccepted: "not_accepted"
-          }
+            comments: null
+          },
+          ownerDetails: {
+            name: null,
+            email: null,
+            phone: null
+          },
+          gdprAccepted: "not_accepted"
+        };
 
-          this.entries = []
-          this.summary = {
-            days: null,
-            cosmeticsCount: 0,
-            extraLongWalkingCount: 0,
-            physiotherapyCount: 0,
-            total: 0.0
-          }
-          this.petCount = 0;
+        this.entries = [];
+        this.summary = {
+          days: null,
+          cosmeticsCount: 0,
+          extraLongWalkingCount: 0,
+          physiotherapyCount: 0,
+          total: 0.0
+        };
+        this.petCount = 0;
       } else {
-        if(response.status == 422) {
-
+        if (response.status == 422) {
           let validationErrors = await response.json();
           let html = ``;
 
-          for(const [key, value] of Object.entries(validationErrors)) {
+          for (const [key, value] of Object.entries(validationErrors)) {
             html += `<li>${value[0]}</li>`;
           }
 
           this.$swal({
-            icon: 'error',
-            title: 'Hibás adatok!',
+            icon: "error",
+            title: "Hibás adatok!",
             html: html,
-            footer: 'Kérlek ellenőrizd az alábbi hibákat beküldés előtt!' 
-          })
+            footer: "Kérlek ellenőrizd az alábbi hibákat beküldés előtt!"
+          });
         }
       }
     },

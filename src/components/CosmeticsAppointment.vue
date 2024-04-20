@@ -276,6 +276,7 @@
                     format="Y-MM-DD"
                     :default-value="new Date()"
                     :disabled-date="getDisabledDates"
+                    @change="dateSelected"
                   ></date-picker>
                 </b-col>
                 <b-col md="12" xl="6" class="picker mt-2 mt-xl-0">
@@ -285,8 +286,9 @@
                     :inline="true"
                     v-model="form.selectedTime"
                     :time-picker-options="timePickerOptions"
+                    :disabled-time="getDisabledTimes"
                     format="HH:mm"
-                  ></date-picker>
+                  />
                 </b-col>
               </b-row>
             </b-card>
@@ -364,7 +366,7 @@
                         >
                         <b-list-group-item class="custom-list-group-item"
                           ><strong>Kezelés időtartama: </strong
-                          >{{ treatmentDuration }} perc</b-list-group-item
+                          >{{ form.treatmentDuration }} perc</b-list-group-item
                         >
                         <b-list-group-item class="custom-list-group-item"
                           ><strong>Választott dátum: </strong
@@ -415,6 +417,7 @@ import "vue2-datepicker/index.css";
 import _ from "lodash";
 import Footer from "../components/Shared/Footer.vue";
 import Bar from "../components/Shared/Bar.vue";
+import moment from 'moment'
 
 export default {
   name: "CosmeticsAppointment",
@@ -427,7 +430,6 @@ export default {
 
   data() {
     return {
-      treatmentDuration: null,
       form: {
         name: null,
         email: null,
@@ -439,8 +441,10 @@ export default {
         length: null,
         selectedDate: null,
         selectedTime: null,
+        treatmentDuration: null,
         gdprAccepted: "not_accepted"
       },
+      disabledTimes: [],
       timePickerOptions: {
         start: "08:30",
         step: "00:30",
@@ -488,52 +492,52 @@ export default {
       size: [{ value: "o", text: "Nem releváns" }],
 
       serviceDurations: {
-        "kv-1-a3-o": 15,
-        "kv-3-a3-o": 15,
+        "kv-1-a3-o": 30,
+        "kv-3-a3-o": 30,
         "fn-1-a3-o": 30,
-        "fn-3-a3-o": 45,
+        "fn-3-a3-o": 60,
         "eu-1-a3-o": 30,
         "eu-3-a3-o": 30,
         "full-1-a3-o": 60,
-        "full-3-a3-o": 75,
-        "kv-1-a4-o": 15,
-        "kv-3-a4-o": 15,
+        "full-3-a3-o": 90,
+        "kv-1-a4-o": 30,
+        "kv-3-a4-o": 30,
         "fn-1-a4-o": 30,
-        "fn-3-a4-o": 45,
+        "fn-3-a4-o": 60,
         "eu-1-a4-o": 30,
         "eu-3-a4-o": 30,
         "full-1-a4-o": 60,
-        "full-3-a4-o": 75,
-        "fn-1-a2-o": 45,
+        "full-3-a4-o": 90,
+        "fn-1-a2-o": 60,
         "fn-3-a2-o": 60,
         "eu-1-a2-o": 30,
         "eu-3-a2-o": 30,
         "ffn-1-a2-o": 60,
         "ffn-3-a2-o": 90,
-        "kv-1-a2-o": 15,
-        "kv-3-a2-o": 15,
+        "kv-1-a2-o": 30,
+        "kv-3-a2-o": 30,
         "full-1-a2-o": 90,
-        "full-2-a2-o": 105,
+        "full-2-a2-o": 120,
         "full-3-a2-o": 120,
-        "kv-1-a1-s": 15,
-        "kv-2-a1-s": 15,
-        "kv-3-a1-s": 15,
-        "kv-1-a1-m": 15,
-        "kv-2-a1-m": 15,
-        "kv-3-a1-m": 15,
-        "kv-1-a1-l": 15,
-        "kv-2-a1-l": 15,
-        "kv-3-a1-l": 15,
+        "kv-1-a1-s": 30,
+        "kv-2-a1-s": 30,
+        "kv-3-a1-s": 30,
+        "kv-1-a1-m": 30,
+        "kv-2-a1-m": 30,
+        "kv-3-a1-m": 30,
+        "kv-1-a1-l": 30,
+        "kv-2-a1-l": 30,
+        "kv-3-a1-l": 30,
         "fn-1-a1-s": 30,
-        "fn-2-a1-s": 45,
+        "fn-2-a1-s": 60,
         "fn-3-a1-s": 60,
-        "fn-1-a1-m": 45,
+        "fn-1-a1-m": 60,
         "fn-2-a1-m": 60,
-        "fn-3-a1-m": 75,
-        "fn-1-a1-l": 45,
+        "fn-3-a1-m": 90,
+        "fn-1-a1-l": 60,
         "fn-2-a1-l": 60,
         "fn-3-a1-l": 90,
-        "ffn-1-a1-s": 45,
+        "ffn-1-a1-s": 60,
         "ffn-2-a1-s": 60,
         "ffn-3-a1-s": 90,
         "ffn-1-a1-m": 60,
@@ -552,9 +556,9 @@ export default {
         "eu-2-a1-l": 30,
         "eu-3-a1-l": 30,
         "full-1-a1-s": 60,
-        "full-2-a1-s": 70,
+        "full-2-a1-s": 60,
         "full-3-a1-s": 90,
-        "full-1-a1-m": 75,
+        "full-1-a1-m": 90,
         "full-2-a1-m": 90,
         "full-3-a1-m": 120,
         "full-1-a1-l": 90,
@@ -599,14 +603,11 @@ export default {
   methods: {
     calculateTreatmentDuration() {
       const key = `${this.form.servicetype}-${this.form.length}-${this.form.animaltype}-${this.form.dogsize}`;
-      this.treatmentDuration = this.serviceDurations[key] || null;
+      this.form.treatmentDuration = this.serviceDurations[key] || null;
 
-      if (this.treatmentDuration !== null) {
+      if (this.form.treatmentDuration !== null) {
         this.form.selectedDate = null;
         this.form.selectedTime = null;
-
-        this.timePickerOptions.step = `0${this.treatmentDuration / 60}:${this
-          .treatmentDuration % 60}`;
       }
     },
 
@@ -618,6 +619,34 @@ export default {
         date > new Date(today.getTime() + 30 * 24 * 3600 * 1000)
       );
     },
+
+    async dateSelected(date) {
+      const selectedDate = moment(date).format('YYYY-MM-DD')
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Accept', 'application/json')
+
+      const raw = JSON.stringify({selectedDate});
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+      
+      const response = await fetch('http://localhost:81/cosmetics-appointment/booked-appoitments', requestOptions)
+      this.disabledTimes = await response.json()
+    },
+
+    getDisabledTimes(date) {
+      if(this.form.selectedDate === null) {
+        return true
+      }
+
+      return this.disabledTimes.indexOf( moment(date).format('HH:mm') ) !== -1
+    },  
     async submitForm(e) {
       e.preventDefault();
 

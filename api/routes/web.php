@@ -21,6 +21,7 @@ $router->group(['prefix' => 'cosmetics-appointment'], function() use ($router) {
     $router->get('', ['uses' => 'CosmeticsAppointmentController@list']);
     $router->post('', ['uses' => 'CosmeticsAppointmentController@store']);
     $router->delete('{cosmeticsAppointmentId}', ['uses' => 'CosmeticsAppointmentController@destroy']);
+    $router->post('/booked-appoitments', ['uses' => 'CosmeticsAppointmentController@getBookedAppointments']);
 });
 
 $router->group(['prefix' => 'pet-hotel-reservation'], function() use ($router) {

@@ -16,6 +16,7 @@ class CosmeticsAppointment extends Model
         'pet_name',
         'pet_type',
         'treatment_type',
+        'treatment_duration',
         'options',
         'appointment_date',
     ];

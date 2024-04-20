@@ -23,7 +23,7 @@
               ki az állatokat.
             </p>
             <router-link :to="{ name: 'DogBoardingHouseAppointment' }"
-              ><b-button class="btn-app" style="margin-top: 40px;"
+              ><b-button class="btn-board" style="margin-top: 40px;"
                 >Foglalás</b-button
               ></router-link
             >
@@ -107,7 +107,7 @@
         ><b-col
           ><router-link :to="{ name: 'DogBoardingHouseAppointment' }"
             ><b-button
-              class="btn-app"
+              class="btn-board"
               style="margin-top: 20px; margin-bottom: 50px;"
               >Foglalás</b-button
             ></router-link
@@ -158,6 +158,17 @@ export default {
 };
 </script>
 <style>
+.btn-board {
+  width: 15rem;
+  font-size: 1.4rem;
+  background-color: #5c002e;
+  border-radius: 33px;
+  color: #ffffff;
+  border: 0px;
+  text-decoration: none;
+  margin-bottom: 40px;
+  margin-top: -8px;
+}
 .dbpic {
   max-width: 380px;
   border-radius: 15px;

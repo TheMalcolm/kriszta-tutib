@@ -22,4 +22,17 @@ class PetHotelReservation extends Model
     protected $casts = [
         'pets' => 'array'
     ];
+
+    /**
+     * @var int
+     */
+    public static $maxPetsAllowed = 5;
+
+    /**
+     * @return int
+     */
+    public function getPetsCountAttribute(): int
+    {
+        return count($this->pets);
+    }
 }

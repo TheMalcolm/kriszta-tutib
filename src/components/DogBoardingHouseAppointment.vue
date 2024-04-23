@@ -217,6 +217,7 @@
                       label="*Tartózkodás ideje:"
                       label-for="interval"
                       class="labels"
+                      :description="intervalDescription"
                     >
                       <date-picker
                         v-model="form.interval"
@@ -390,6 +391,7 @@ import "vue2-datepicker/index.css";
 import _ from "lodash";
 import Footer from "./Shared/Footer.vue";
 import Bar from "./Shared/Bar.vue";
+import moment from 'moment'
 
 export default {
   name: "DogBoardingHouseAppointment",
@@ -402,6 +404,7 @@ export default {
 
   data() {
     return {
+      intervalDescription: null,
       form: {
         interval: null,
         petCount: null,
@@ -446,14 +449,17 @@ export default {
         extraLongWalkingCount: 0,
         physiotherapyCount: 0,
         total: 0.0
-      }
+      },
+
+      occupancyData: null,
+      freeSpaces: null,
     };
   },
 
   methods: {
     showModal() {
-      if (this.form.petCount >= 6) {
-        alert("Maximum 6 kiskedvenc adható hozzá!");
+      if (this.occupancyData !== null && this.form.petCount >= this.freeSpaces) {
+        alert(`A kiválasztott időszakra maximum ${this.freeSpaces} kiskedvenc hozható!`);
         return;
       }
 
@@ -461,9 +467,18 @@ export default {
     },
 
     disabledDates(date) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return date <= today;
+      const today = moment.now()
+      const inputDate = moment(date)
+
+      if(this.occupancyData != null) {
+        let { lastBookableDate, disabledDates } = this.occupancyData
+
+        lastBookableDate = moment(lastBookableDate)
+
+        return inputDate.isSameOrBefore(today) || inputDate.isSameOrAfter(lastBookableDate) || disabledDates.indexOf(inputDate.format('YYYY-MM-DD')) !== -1
+      } else {
+        return inputDate.isSameOrBefore(today)
+      }
     },
 
     submitModalForm() {
@@ -590,7 +605,53 @@ export default {
       this.calculateTotal();
     },
 
+    async getSpacesAvailable() {
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Accept", "application/json");
+
+      const body = JSON.stringify({interval: this.form.interval});
+
+      const requestOptions = {
+        method: "POST",
+        headers,
+        body,
+        redirect: "follow"
+      };
+
+      const response = await fetch(
+        "http://localhost:81/pet-hotel-reservation/spaces-available",
+        requestOptions
+      );
+
+      const responseJson = await response.json()
+      this.freeSpaces = responseJson.maxPetsAllowed - responseJson.occupancy
+      this.intervalDescription = `${this.freeSpaces} szabad hely áll rendelkezésre a megadott intervallumban`
+
+      if(this.freeSpaces <= 0) {
+        this.form.interval = null
+      }
+    },
+
+    async getReservedIntervals() {
+      const headers = new Headers();
+      headers.append("Accept", "application/json");
+
+      const requestOptions = {
+        method: "GET",
+        headers,
+      };
+
+      const response = await fetch(
+        "http://localhost:81/pet-hotel-reservation/reserved-intervals",
+        requestOptions
+      );
+
+      this.occupancyData = await response.json()
+    },
+
     calculateTotal() {
+      this.getSpacesAvailable()
       if (this.form.interval != null && this.form.petCount > 0) {
         this.summary = {
           days: null,
@@ -633,11 +694,20 @@ export default {
         this.summary.total = 0.0;
       }
     }
+  },
+
+  mounted() {
+    this.getReservedIntervals()
   }
 };
 </script>
 
 <style>
+
+.form-text {
+  font-size: 13px;
+}
+
 .bg-info {
   background-color: transparent !important;
 }

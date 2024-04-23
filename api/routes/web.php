@@ -28,4 +28,7 @@ $router->group(['prefix' => 'pet-hotel-reservation'], function() use ($router) {
     $router->get('', ['uses' => 'PetHotelReservationController@list']);
     $router->post('', ['uses' => 'PetHotelReservationController@store']);
     $router->delete('{petHotelReservationId}', ['uses' => 'PetHotelReservationController@destroy']);
+
+    $router->get('/reserved-intervals', ['uses' => 'PetHotelReservationController@getReservedIntervals']);
+    $router->post('/spaces-available', ['uses' => 'PetHotelReservationController@getSpacesAvailable']);
 });

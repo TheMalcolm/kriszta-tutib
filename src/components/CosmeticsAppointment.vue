@@ -538,7 +538,7 @@ import "vue2-datepicker/index.css";
 import _ from "lodash";
 import Footer from "../components/Shared/Footer.vue";
 import Bar from "../components/Shared/Bar.vue";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   name: "CosmeticsAppointment",
@@ -742,13 +742,13 @@ export default {
     },
 
     async dateSelected(date) {
-      const selectedDate = moment(date).format('YYYY-MM-DD')
+      const selectedDate = moment(date).format("YYYY-MM-DD");
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append('Accept', 'application/json')
+      myHeaders.append("Accept", "application/json");
 
-      const raw = JSON.stringify({selectedDate});
+      const raw = JSON.stringify({ selectedDate });
 
       const requestOptions = {
         method: "POST",
@@ -756,18 +756,21 @@ export default {
         body: raw,
         redirect: "follow"
       };
-      
-      const response = await fetch('http://localhost:81/cosmetics-appointment/booked-appoitments', requestOptions)
-      this.disabledTimes = await response.json()
+
+      const response = await fetch(
+        "http://localhost:81/cosmetics-appointment/booked-appoitments",
+        requestOptions
+      );
+      this.disabledTimes = await response.json();
     },
 
     getDisabledTimes(date) {
-      if(this.form.selectedDate === null) {
-        return true
+      if (this.form.selectedDate === null) {
+        return true;
       }
 
-      return this.disabledTimes.indexOf( moment(date).format('HH:mm') ) !== -1
-    },  
+      return this.disabledTimes.indexOf(moment(date).format("HH:mm")) !== -1;
+    },
     async submitForm(e) {
       e.preventDefault();
 
@@ -795,6 +798,8 @@ export default {
           icon: "success",
           title: "Sikeres időpontfoglalás!",
           text: "Szeretettel várunk a kiválasztott időpontban!"
+        }).then(() => {
+          this.$router.push({ path: "/kozmetika" });
         });
 
         this.form = {

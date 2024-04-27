@@ -24,7 +24,7 @@ class CosmeticsAppointmentController extends Controller
             'owner_name' => $request->get('name'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
-            'pet_name' => $request->get('name'),
+            'pet_name' => $request->get('pet'),
             'pet_type' => $request->get('pet'),
             'treatment_type' => $request->get('servicetype'),
             'treatment_duration' => $request->get('treatmentDuration'),

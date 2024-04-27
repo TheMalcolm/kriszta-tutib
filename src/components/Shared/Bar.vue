@@ -12,8 +12,6 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" class="justify-content-end" is-nav>
-        <b-navbar-nav> </b-navbar-nav>
-
         <b-navbar-nav class="ml-auto " style="color: #5c002e;">
           <b-nav-item href="#">
             <router-link class="nav-btn" :to="{ name: 'HomePage' }"

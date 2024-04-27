@@ -19,7 +19,7 @@
         >
         <b-form-group
           id="petNameGroup"
-          label="Kutyus neve:"
+          label="*Kutyus neve:"
           label-for="petName"
           class="labels mb-3"
         >
@@ -32,7 +32,7 @@
 
         <b-form-group
           id="petTypeGroup"
-          label="Kutyus fajtája:"
+          label="*Kutyus fajtája:"
           label-for="petType"
           class="labels mb-3"
         >
@@ -117,7 +117,7 @@
           </div>
         </b-form-checkbox>
 
-        <b-button size="sm" @click="submitModalForm()"
+        <b-button size="sm" @click="submitModalForm()" class="btn-edit"
           ><b-icon-plus /> Mentés</b-button
         >
       </div>
@@ -268,13 +268,13 @@
                     <b-icon-x-circle-fill v-else /> Fizioterápia
                   </p>
 
-                  <b-button size="sm" @click="removePet(index)" variant="danger"
-                    ><b-icon-trash /> Törlés</b-button
-                  >
                   <b-button
                     size="sm"
-                    @click="editDoggo(index)"
-                    variant="outline-primary"
+                    @click="removePet(index)"
+                    class="btn-delete"
+                    ><b-icon-trash /> Törlés</b-button
+                  >
+                  <b-button size="sm" @click="editDoggo(index)" class="btn-edit"
                     ><b-icon-pencil-square /> Módosítás</b-button
                   >
                 </b-card-body>
@@ -391,7 +391,7 @@ import "vue2-datepicker/index.css";
 import _ from "lodash";
 import Footer from "./Shared/Footer.vue";
 import Bar from "./Shared/Bar.vue";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   name: "DogBoardingHouseAppointment",
@@ -452,14 +452,27 @@ export default {
       },
 
       occupancyData: null,
-      freeSpaces: null,
+      freeSpaces: null
     };
   },
 
   methods: {
     showModal() {
-      if (this.occupancyData !== null && this.form.petCount >= this.freeSpaces) {
-        alert(`A kiválasztott időszakra maximum ${this.freeSpaces} kiskedvenc hozható!`);
+      if (this.freeSpaces == null) {
+        alert(`Kérlek előbb válassz tartózkodási intervallumot!`);
+        return;
+      } else if (this.freeSpaces == 0) {
+        alert(
+          `A kiválasztott időszakra már nincs szabad hely, kérjük válasszon másik időpontokat!`
+        );
+        return;
+      } else if (
+        this.occupancyData !== null &&
+        this.form.petCount >= this.freeSpaces
+      ) {
+        alert(
+          `A kiválasztott időszakra maximum ${this.freeSpaces} kiskedvenc hozható!`
+        );
         return;
       }
 
@@ -467,17 +480,21 @@ export default {
     },
 
     disabledDates(date) {
-      const today = moment.now()
-      const inputDate = moment(date)
+      const today = moment.now();
+      const inputDate = moment(date);
 
-      if(this.occupancyData != null) {
-        let { lastBookableDate, disabledDates } = this.occupancyData
+      if (this.occupancyData != null) {
+        let { lastBookableDate, disabledDates } = this.occupancyData;
 
-        lastBookableDate = moment(lastBookableDate)
+        lastBookableDate = moment(lastBookableDate);
 
-        return inputDate.isSameOrBefore(today) || inputDate.isSameOrAfter(lastBookableDate) || disabledDates.indexOf(inputDate.format('YYYY-MM-DD')) !== -1
+        return (
+          inputDate.isSameOrBefore(today) ||
+          inputDate.isSameOrAfter(lastBookableDate) ||
+          disabledDates.indexOf(inputDate.format("YYYY-MM-DD")) !== -1
+        );
       } else {
-        return inputDate.isSameOrBefore(today)
+        return inputDate.isSameOrBefore(today);
       }
     },
 
@@ -542,6 +559,8 @@ export default {
           icon: "success",
           title: "Sikeres időpontfoglalás!",
           text: "Szeretettel várunk a kiválasztott időpontban!"
+        }).then(() => {
+          this.$router.push({ path: "/panzio" });
         });
 
         this.form = {
@@ -610,7 +629,7 @@ export default {
       headers.append("Content-Type", "application/json");
       headers.append("Accept", "application/json");
 
-      const body = JSON.stringify({interval: this.form.interval});
+      const body = JSON.stringify({ interval: this.form.interval });
 
       const requestOptions = {
         method: "POST",
@@ -624,12 +643,12 @@ export default {
         requestOptions
       );
 
-      const responseJson = await response.json()
-      this.freeSpaces = responseJson.maxPetsAllowed - responseJson.occupancy
-      this.intervalDescription = `${this.freeSpaces} szabad hely áll rendelkezésre a megadott intervallumban`
+      const responseJson = await response.json();
+      this.freeSpaces = responseJson.maxPetsAllowed - responseJson.occupancy;
+      this.intervalDescription = `${this.freeSpaces} szabad hely áll rendelkezésre a megadott intervallumban`;
 
-      if(this.freeSpaces <= 0) {
-        this.form.interval = null
+      if (this.freeSpaces <= 0) {
+        this.form.interval = null;
       }
     },
 
@@ -639,7 +658,7 @@ export default {
 
       const requestOptions = {
         method: "GET",
-        headers,
+        headers
       };
 
       const response = await fetch(
@@ -647,11 +666,11 @@ export default {
         requestOptions
       );
 
-      this.occupancyData = await response.json()
+      this.occupancyData = await response.json();
     },
 
     calculateTotal() {
-      this.getSpacesAvailable()
+      this.getSpacesAvailable();
       if (this.form.interval != null && this.form.petCount > 0) {
         this.summary = {
           days: null,
@@ -669,21 +688,17 @@ export default {
           ) + 1;
         this.summary.total +=
           this.summary.days * this.prices.basePrice * this.form.petCount;
-
         for (const pet of this.entries) {
           if (pet.extraFeatures.cosmetics == true) {
             this.summary.cosmeticsCount++;
           }
-
           if (pet.extraFeatures.extraLongWalking == true) {
             this.summary.extraLongWalkingCount += this.summary.days;
           }
-
           if (pet.extraFeatures.physiotherapy == true) {
             this.summary.physiotherapyCount++;
           }
         }
-
         this.summary.total +=
           this.summary.cosmeticsCount * this.prices.cosmetics;
         this.summary.total +=
@@ -697,13 +712,12 @@ export default {
   },
 
   mounted() {
-    this.getReservedIntervals()
+    this.getReservedIntervals();
   }
 };
 </script>
 
 <style>
-
 .form-text {
   font-size: 13px;
 }
@@ -712,12 +726,37 @@ export default {
   background-color: transparent !important;
 }
 
+.p {
+  color: #5c002e;
+}
+
+.btn-delete {
+  border: 0px;
+}
+.btn-delete:hover {
+  background-color: #ba3c3c;
+  color: #ffffff;
+  border: 0px;
+}
+
 .btn-save {
   background-color: #5c002e;
   border-radius: 33px;
   color: #ffffff;
   border: 0px;
   text-decoration: none;
+}
+
+.btn-edit {
+  background-color: rgba(240, 168, 204, 20);
+  color: #ffffff;
+  border: 0px;
+}
+
+.btn-edit:hover {
+  color: #ffffff;
+  background-color: #5c002e;
+  border: 0px;
 }
 
 .btn-save:hover {

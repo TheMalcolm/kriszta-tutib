@@ -26,7 +26,7 @@ class PetHotelReservation extends Model
     /**
      * @var int
      */
-    public static $maxPetsAllowed = 5;
+    public static $maxPetsAllowed = 6;
 
     /**
      * @return int

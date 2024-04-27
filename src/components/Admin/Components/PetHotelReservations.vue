@@ -37,7 +37,7 @@
           <b-icon-info-circle />
         </b-button>
 
-        <b-button size="sm" @click="deleteConfirm(row.item)"
+        <b-button size="sm" @click="deleteConfirm(row.item)" class="btn-del"
           ><b-icon-trash
         /></b-button>
       </template>

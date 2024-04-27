@@ -34,7 +34,7 @@ class CosmeticsAppointmentStoreRequest extends RequestAbstract
             'length' => 'required',
             'selectedDate' => 'required',
             'selectedTime' => 'required',
-            'gdprAccepted' => 'required',
+            'gdprAccepted' => 'required|in:accepted',
         ];
     }
 
@@ -48,7 +48,15 @@ class CosmeticsAppointmentStoreRequest extends RequestAbstract
             'dogsize' => 'kisállat mérete',
             'length' => 'szőr hosszúság',
             'selectedDate' => 'dátum',
-            'selectedTime' => 'időpont'
+            'selectedTime' => 'időpont',
+            
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'gdprAccepted.in' => 'Az ÁSZF elfogadása kötelező az időpontfoglaláshoz!'
         ];
     }
 }

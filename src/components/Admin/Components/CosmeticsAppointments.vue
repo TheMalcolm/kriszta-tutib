@@ -58,7 +58,7 @@
               <b-icon-info-circle />
             </b-button>
 
-            <b-button size="sm" @click="deleteConfirm(row.item)"
+            <b-button size="sm" @click="deleteConfirm(row.item)" class="btn-del"
               ><b-icon-trash
             /></b-button>
           </template>
@@ -212,8 +212,24 @@ export default {
 </script>
 
 <style>
+.btn-del {
+  border: none;
+}
+
+.btn-del:hover {
+  background-color: #ba3c3c;
+  color: #ffffff;
+  border: 0px;
+}
+
 .btn-info {
   background-color: #5c002e;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-info:hover {
+  background-color: rgba(240, 168, 204, 20);
   color: #ffffff;
   border: none;
 }

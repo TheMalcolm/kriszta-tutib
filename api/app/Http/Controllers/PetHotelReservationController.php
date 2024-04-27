@@ -40,7 +40,7 @@ class PetHotelReservationController extends Controller
      */
     public function list(Request $request): PetHotelReservationResourceCollection
     {
-        return new PetHotelReservationResourceCollection(PetHotelReservation::orderBy('id', 'desc')->paginate(4));
+        return new PetHotelReservationResourceCollection(PetHotelReservation::orderBy('id', 'desc')->paginate(6));
     }
 
     /**
@@ -65,13 +65,15 @@ class PetHotelReservationController extends Controller
 
         $from = Carbon::parse($request->get('interval')[0])->addHours(2)->format('Y-m-d');
         $till = Carbon::parse($request->get('interval')[1])->addHours(2)->format('Y-m-d');
+        
         $period = new CarbonPeriod($from, '1 day', $till);
 
         foreach($period as $day) {
             $reservationsCounter = PetHotelReservation::query()
                 ->where('stay_from', '<=', $day)
                 ->where('stay_till', '>=', $day)
-                ->count();
+                ->get()
+                ->sum('pets_count');
 
             if($reservationsCounter > $maxOccupancy) {
                 $maxOccupancy = $reservationsCounter;

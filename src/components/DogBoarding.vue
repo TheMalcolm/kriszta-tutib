@@ -135,10 +135,10 @@ export default {
         { type: "Minden megkezdett nap", price: "4.500 Ft/nap" },
         {
           type: "Teljes kutyakozmetikai szolgáltatás",
-          price: "6.000 Ft/tartozkodás"
+          price: "6.000 Ft/tartózkodás"
         },
         { type: "Extra hosszú séta", price: "500 Ft/nap" },
-        { type: "Fizioterápiás foglalkozás", price: "5.000/tartozkodás" }
+        { type: "Fizioterápiás foglalkozás", price: "5.000 Ft/tartózkodás" }
       ],
       fields: [
         { key: "type", label: "" },
@@ -168,6 +168,11 @@ export default {
   text-decoration: none;
   margin-bottom: 40px;
   margin-top: -8px;
+}
+
+.btn-board:hover {
+  background-color: rgba(240, 168, 204, 20);
+  color: #ffffff;
 }
 .dbpic {
   max-width: 380px;

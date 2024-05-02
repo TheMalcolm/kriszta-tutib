@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CosmeticsAppointmentStoreRequest;
 use App\Http\Resources\CosmeticsAppointmentResource;
 use App\Models\CosmeticsAppointment;
+use App\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,18 +21,21 @@ class CosmeticsAppointmentController extends Controller
      */
     public function store(CosmeticsAppointmentStoreRequest $request): CosmeticsAppointmentResource
     {
-        $cosmeticsAppointment = CosmeticsAppointment::create([
-            'owner_name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
+        $customer = Customer::firstOrCreate(
+            ['email' => $request->get('email')],
+            [
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'phone' => $request->get('phone'),
+            ]);
+
+       $cosmeticsAppointment = $customer->cosmeticsAppointments()->create([
             'pet_name' => $request->get('pet'),
             'pet_type' => $request->get('pet'),
             'treatment_type' => $request->get('servicetype'),
             'treatment_duration' => $request->get('treatmentDuration'),
-            'options' => [
-                'dogsize' => $request->get('dogsize'),
-                'animaltype' => $request->get('animaltype'),
-            ],
+            'dogsize' => $request->get('dogsize'),
+            'animaltype' => $request->get('animaltype'),
             'appointment_date' => $request->get('selectedDate') . ' ' . $request->get('selectedTime'),
         ]);
 

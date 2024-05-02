@@ -15,16 +15,17 @@ class CreateCosmeticsAppointmentTable extends Migration
     {
         Schema::create('cosmetics_appointments', function (Blueprint $table) {
             $table->id();
-            $table->string('owner_name');
-            $table->string('email');
-            $table->string('phone');
+            $table->foreignId('customer_id');
             $table->string('pet_name');
             $table->string('pet_type');
             $table->string('treatment_type');
-            $table->json('options');
+            $table->string('dogsize');
+            $table->string('animaltype');
             $table->dateTime('appointment_date');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 

@@ -15,15 +15,13 @@ class CreatePetHotelReservationsTable extends Migration
     {
         Schema::create('pet_hotel_reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('owner_name');
-            $table->string('email');
-            $table->string('phone');
+            $table->foreignId('customer_id');
             $table->date('stay_from');
             $table->date('stay_till');
-            $table->json('pets');
             $table->float('total');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 

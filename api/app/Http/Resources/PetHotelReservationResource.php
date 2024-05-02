@@ -18,12 +18,23 @@ class PetHotelReservationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'owner_name' => $this->owner_name,
-            'email' => $this->email,
-            'phone' => $this->phone,
+            'owner_name' => $this->customer->name,
+            'email' => $this->customer->email,
+            'phone' => $this->customer->phone,
             'stay_from' => $this->stay_from,
             'stay_till' => $this->stay_till,
-            'pets' => $this->pets,
+            'pets' => $this->pets->map(function($item){
+                return [
+                    'name' => $item->name,
+                    'type' => $item->type,
+                    'comments' => $item->comments,
+                    'extraFeatures' => [
+                        'cosmetics' => $item->cosmetics,
+                        'physiotherapy' => $item->extraLongWalking,
+                        'extraLongWalking' => $item->physiotherapy,
+                    ]
+                ];
+            }),
             'pets_count' => count($this->pets),
             'total' => $this->total,
             'created_at' => $this->created_at,

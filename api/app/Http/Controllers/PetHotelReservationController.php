@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PetHotelReservationStoreRequest;
 use App\Http\Resources\PetHotelReservationResource;
 use App\Http\Resources\PetHotelReservationResourceCollection;
+use App\Models\Customer;
 use App\Models\PetHotelReservation;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -20,16 +21,32 @@ class PetHotelReservationController extends Controller
      */
     public function store(PetHotelReservationStoreRequest $request): PetHotelReservationResource
     {
-        $petHotelReservation = PetHotelReservation::create([
-            'owner_name' => $request->get('ownerDetails')['name'],
-            'email' => $request->get('ownerDetails')['email'],
-            'phone' => $request->get('ownerDetails')['phone'],
+        $customer = Customer::firstOrCreate(
+            ['email' => $request->get('ownerDetails')['email']],
+            [
+                'name' => $request->get('ownerDetails')['name'],
+                'email' => $request->get('ownerDetails')['email'],
+                'phone' => $request->get('ownerDetails')['phone'],
+            ]);
+
+        $petHotelReservation = $customer->petHotelReservations()->create([
             'stay_from' => Carbon::parse($request->get('interval')[0])->addDay()->format('Y-m-d'),
             'stay_till' => Carbon::parse($request->get('interval')[1])->addDay()->format('Y-m-d'),
             'pets' => $request->get('entries'),
             'total' => $request->get('total'),
         ]);
 
+        foreach($request->get('entries') as $entry) {
+            $petHotelReservation->pets()->create([
+                'name' => $entry['name'],
+                'type' => $entry['type'],
+                'comments' => $entry['comments'],
+                'cosmetics' => $entry['extraFeatures']['cosmetics'],
+                'physiotherapy' => $entry['extraFeatures']['extraLongWalking'],
+                'extraLongWalking' => $entry['extraFeatures']['physiotherapy'],
+            ]);
+        }
+        
         return new PetHotelReservationResource($petHotelReservation);
     }
 

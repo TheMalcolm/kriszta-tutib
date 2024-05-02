@@ -18,13 +18,16 @@ class CosmeticsAppointmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'owner_name' => $this->owner_name,
-            'email' => $this->email,
-            'phone' => $this->phone,
+            'owner_name' => $this->customer->name,
+            'email' => $this->customer->email,
+            'phone' => $this->customer->phone,
             'pet_name' => $this->pet_name,
             'pet_type' => $this->pet_type,
             'treatment_type' => $this->treatment_type,
-            'options' => $this->options,
+            'options' => [
+                'dogsize' => $this->dogsize,
+                'animaltype' => $this->animaltype,
+            ],
             'appointment_date' => $this->appointment_date,
             'created_at' => $this->created_at,
             'appointment_time' => Carbon::parse($this->appointment_date)->format('H:i')

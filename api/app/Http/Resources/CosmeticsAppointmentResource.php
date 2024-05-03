@@ -22,7 +22,7 @@ class CosmeticsAppointmentResource extends JsonResource
             'email' => $this->customer->email,
             'phone' => $this->customer->phone,
             'pet_name' => $this->pet_name,
-            'pet_type' => $this->pet_type,
+            'pet_type' => $this->animaltype,
             'treatment_type' => $this->treatment_type,
             'options' => [
                 'dogsize' => $this->dogsize,

@@ -31,7 +31,6 @@ class CosmeticsAppointmentController extends Controller
 
        $cosmeticsAppointment = $customer->cosmeticsAppointments()->create([
             'pet_name' => $request->get('pet'),
-            'pet_type' => $request->get('pet'),
             'treatment_type' => $request->get('servicetype'),
             'treatment_duration' => $request->get('treatmentDuration'),
             'dogsize' => $request->get('dogsize'),

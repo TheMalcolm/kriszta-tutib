@@ -17,7 +17,6 @@ class CreateCosmeticsAppointmentTable extends Migration
             $table->id();
             $table->foreignId('customer_id');
             $table->string('pet_name');
-            $table->string('pet_type');
             $table->string('treatment_type');
             $table->string('dogsize');
             $table->string('animaltype');

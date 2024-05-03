@@ -43,8 +43,8 @@
           <template #cell(petname)="row">
             <span class="rowdata">{{ row.item.petname }}</span>
           </template>
-          <template #cell(pettype)="row">
-            <span class="rowdata">{{ formatAnimal(row.item.pettype) }}</span>
+          <template #cell(pet_type)="row">
+            <span class="rowdata">{{ formatAnimal(row.item.pet_type) }}</span>
           </template>
           <template #cell(service)="row">
             <span class="rowdata">{{ formatService(row.item.service) }}</span>
@@ -96,10 +96,7 @@
         >{{ formatService(selectedItem.treatment_type) }}
       </p>
       <p class="datasmall">
-        <strong>Szőr hosszúsága: </strong>{{ formatFur(selectedItem.fur) }}
-      </p>
-      <p class="datasmall">
-        <strong>Kisállat mérete:</strong> {{ formatSize(selectedItem.size) }}
+        <strong>Kisállat mérete:</strong> {{ formatSize(selectedItem.options.dogsize) }}
       </p>
     </b-modal>
   </div>
@@ -139,6 +136,7 @@ export default {
         { headers: { Accept: "application/json" } }
       );
       this.cosmeticsAppointments = await response.json();
+      console.log(this.cosmeticsAppointments)
     },
 
     openModal(item) {

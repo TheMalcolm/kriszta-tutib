@@ -27,6 +27,7 @@ class CosmeticsAppointmentResource extends JsonResource
             'options' => [
                 'dogsize' => $this->dogsize,
                 'animaltype' => $this->animaltype,
+                'fur' => $this->fur,
             ],
             'appointment_date' => $this->appointment_date,
             'created_at' => $this->created_at,

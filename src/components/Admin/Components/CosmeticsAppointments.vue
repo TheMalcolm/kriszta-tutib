@@ -96,6 +96,9 @@
         >{{ formatService(selectedItem.treatment_type) }}
       </p>
       <p class="datasmall">
+        <strong>Szőr hosszúsága: </strong>{{ formatFur(selectedItem.fur) }}
+      </p>
+      <p class="datasmall">
         <strong>Kisállat mérete:</strong> {{ formatSize(selectedItem.options.dogsize) }}
       </p>
     </b-modal>

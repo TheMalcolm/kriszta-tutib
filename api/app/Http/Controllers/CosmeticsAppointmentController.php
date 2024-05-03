@@ -35,6 +35,7 @@ class CosmeticsAppointmentController extends Controller
             'treatment_duration' => $request->get('treatmentDuration'),
             'dogsize' => $request->get('dogsize'),
             'animaltype' => $request->get('animaltype'),
+            'fur' => $request->get('length'),
             'appointment_date' => $request->get('selectedDate') . ' ' . $request->get('selectedTime'),
         ]);
 

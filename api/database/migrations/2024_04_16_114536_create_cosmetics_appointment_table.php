@@ -20,6 +20,7 @@ class CreateCosmeticsAppointmentTable extends Migration
             $table->string('treatment_type');
             $table->string('dogsize');
             $table->string('animaltype');
+            $table->string('fur');
             $table->dateTime('appointment_date');
             $table->timestamps();
             $table->softDeletes();

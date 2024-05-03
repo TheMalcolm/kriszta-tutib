@@ -18,7 +18,8 @@ class CosmeticsAppointment extends Model
         'treatment_duration',
         'appointment_date',
         'dogsize',
-        'animaltype'
+        'animaltype',
+        'fur'
     ];
 
     /**
